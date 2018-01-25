@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <v-toolbar id="bar" dark=true>
+    <v-toolbar id="bar" dark>
       <v-toolbar-title id="title"> 
         WTF UMass
       </v-toolbar-title>

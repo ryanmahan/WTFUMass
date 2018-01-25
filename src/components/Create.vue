@@ -3,6 +3,7 @@
     <v-app>
       <v-flex xs10 offset-xs1>
         <v-card id="card">
+          <span id='header' class='headline mb-0 left'>What to fix?</span>
           <v-form id="form" v-model='valid' ref='createForm'>
             <v-text-field
               label="First Name"
@@ -13,7 +14,6 @@
             <v-text-field
               label="Email"
               v-model="email"
-              :rules="emailRules"
               required
             ></v-text-field>
             <v-text-field
@@ -25,9 +25,13 @@
             <v-text-field
               label="Description"
               v-model="description"
-              :counter="500"
+              :counter="1000"
+              multi-line
               required
             ></v-text-field>
+            <v-card-actions>
+               <v-btn @click.native='submit()' flat id='submitBtn'>Submit</v-btn>
+            </v-card-actions>
           </v-form>
         </v-card>
       </v-flex>
@@ -42,19 +46,46 @@
 #card {
   margin: 25px 0px 0px;
 }
+#header {
+  margin: 10px 25px 0px;
+}
+#submitBtn {
+  color: maroon;
+
+}
 </style>
 <script>
+import axios from 'axios'
+
 export default {
+  name: 'Create',
   data () {
     return {
       name: '',
       email: '',
       title: '',
-      description: '',
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-      ]
+      description: ''
+    }
+  },
+  methods: {
+    submit (evt) {
+      console.log('submit ran')
+      axios.post('http://localhost:3000/project', {
+        name: this.name,
+        email: this.email,
+        title: this.title,
+        description: this.description
+      })
+      .then(function (res) {
+        if(res.data === 'failure') {
+          //TODO Feedback for failure path
+          console.log('failed')
+        } else {
+          //TODO Feedback for success path
+          console.log(res.data)
+        }
+      })
     }
   }
 }
+</script>

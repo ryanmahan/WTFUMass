@@ -1,6 +1,6 @@
 var mongoose = require('mongoose')
 
-var Player = new mongoose.Schema({
+var Project = new mongoose.Schema({
     title: String,
     description: String,
     votes: Number,

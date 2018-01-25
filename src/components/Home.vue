@@ -1,7 +1,8 @@
+// eslint-disable-next-line
 <template>
   <div id="home">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <v-app id="card test">
+    <v-app>
       <h1> What to fix? Submit a fix or vote on some here! </h1>
       <v-layout>
         <v-flex xs10 offset-xs1>
@@ -29,6 +30,7 @@
 #votebutton {
   color: maroon;
 }
+
 </style>
 
 
@@ -45,7 +47,7 @@ export default {
     }
   },
   beforeMount() {
-    axios.get('https://localhost:3000/project/')
+    axios.get('https://localhost:3000/project')
     .then( function (res) {
       console.log(res)
     })

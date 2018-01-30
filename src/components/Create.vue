@@ -56,7 +56,7 @@ body {
   margin: 0px 35px;
 }
 #card {
-  margin: 25px 0px 0px;
+  margin: 25px auto;
 }
 #header {
   margin: 10px 25px 0px;

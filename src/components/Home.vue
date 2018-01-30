@@ -3,25 +3,21 @@
   <div id="home">
     <v-app id="cardslist">
         <h1 id='header'> What to fix? Submit a fix or vote on some here! </h1>
-        <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
+        <v-layout d='layout' v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
-              <v-card id='card' data-id=project.id>
-                
+              <v-card class="my-2" flex id='card'>
                 <v-card-title primary-title>
                   <div>
                     <h3 class="headline mb-0">{{ project.title }}</h3>
                     <div class='title left'>{{ project.votes }} Votes</div>
                   </div>
                 </v-card-title>
-
-                <v-card-text>
+                <v-card-text class='subheading'>
                   {{ project.description }}
                 </v-card-text>
-                
                 <v-card-actions>
-                  <v-btn flat @click.native='voteUp(project)' id='votebutton'>Vote for this</v-btn>
+                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>Vote for this</v-btn>
                 </v-card-actions>
-
               </v-card>
           </v-flex>
         </v-layout>
@@ -30,22 +26,31 @@
 </template>
 
 <style>
+:root {
+  --main-bg: lightgray;
+}
 #votebutton {
   color: maroon;
 }
+h1 {
+  background-color: var(--main-bg);
+}
+body {
+  background-color: var(--main-bg);
+}
+.application--wrap {
+  min-height: 1px
+}
 #layout {
-  display: flex;
+  background-color: var(--main-bg);
   justify-content: center;
-  min-width: 600px;
+  min-width: 90%;
+  min-height: 0px;
 }
 #card {
   min-width: 90%;
   max-width: 90%;
-  margin: 15px 0px;
-  min-height: 10%;
-}
-#background {
-  height: 100%;
+  margin: 0px auto 0px;
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class='create'>
-    <v-app>
-      <v-flex xs10 offset-xs1>
+    <v-app id='app'>
+      <v-flex xs10 offset-xs1 id='flex'>
         <v-card id="card">
           <span id='header' class='headline mb-0 left'>What to fix?</span>
           <v-form id="form" ref='createForm'>
@@ -30,7 +30,7 @@
               required
             ></v-text-field>
             <v-card-actions>
-               <v-btn @click.native='submit()' flat id='submitBtn'>Submit</v-btn>
+               <v-btn @click.native='submit()' outline id='submitBtn'>Submit</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -40,6 +40,18 @@
 </template>
 
 <style>
+:root {
+  --main-bg: lightgray;
+}
+.application--wrap {
+  background-color: var(--main-bg)
+}
+body {
+  background-color: var(--main-bg)
+}
+#flex {
+  background-color: var(--main-bg)
+}
 #form {
   margin: 0px 35px;
 }
@@ -51,7 +63,6 @@
 }
 #submitBtn {
   color: maroon;
-
 }
 </style>
 <script>
@@ -81,8 +92,9 @@ export default {
           //TODO Feedback for failure path
           console.log('failed')
         } else {
-          //TODO Feedback for success path
-          console.log(res.data)
+          this.$router.push({
+            name: 'Home'
+          })
         }
       })
     }

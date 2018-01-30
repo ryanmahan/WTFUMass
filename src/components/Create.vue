@@ -4,7 +4,7 @@
       <v-flex xs10 offset-xs1>
         <v-card id="card">
           <span id='header' class='headline mb-0 left'>What to fix?</span>
-          <v-form id="form" v-model='valid' ref='createForm'>
+          <v-form id="form" ref='createForm'>
             <v-text-field
               label="First Name"
               v-model="name"

@@ -15,12 +15,12 @@ router.get('/', function(req, res) {
 
 // Create new project
 router.post('/', function(req, res) {
-  console.log(req.body)
   Project.create({
     submittedBy: req.body.name,
     submittedEmail: req.body.email,
     title: req.body.title,
-    description: req.body.description
+    description: req.body.description,
+    votes: 1
   }, function(err, doc) {
     console.log(doc)
     if (err) {
@@ -29,6 +29,15 @@ router.post('/', function(req, res) {
     } else {
       res.json(doc);
     }
+  })
+})
+
+router.put('/votes/:id', function(req, res) {
+  Project.findById(req.params.id, function (err, doc) {
+    let newVotes = doc.votes+1
+    Project.findByIdAndUpdate(req.params.id, { $set: { votes: newVotes }}, {new: true}, function (err, updated) {
+      res.json(updated)
+    })
   })
 })
 

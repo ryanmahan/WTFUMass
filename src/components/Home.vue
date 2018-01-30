@@ -2,26 +2,27 @@
 <template>
   <div id="home">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <v-app>
-      <h1> What to fix? Submit a fix or vote on some here! </h1>
-      <v-layout>
-        <v-flex xs10 offset-xs1>
-          <v-card>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">This is a Title</h3>
-                <div class='title left'>1234 Votes</div>
-              </div>
-            </v-card-title>
-            <v-card-text>
-              lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </v-card-text>
-            <v-card-actions>
-              <v-btn flat id='votebutton'>Vote for this</v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-flex>
-      </v-layout>
+    <v-app id="cardslist">
+        <h1 id='header'> What to fix? Submit a fix or vote on some here! </h1>
+        <v-layout v-for="project in projects" v-bind:key='project.votes'>
+          <v-flex id='layout'>
+              <v-card id='card' data-id=project.id>
+                <v-card-title primary-title>
+                  <div>
+                    <h3 class="headline mb-0">{{ project.title }}</h3>
+                    <div class='title left'>{{ project.votes }} Votes</div>
+                  </div>
+                </v-card-title>
+                <v-card-text>
+                  {{ project.description }}
+                </v-card-text>
+                
+                <v-card-actions>
+                  <v-btn flat @click.native='voteUp(project)' id='votebutton'>Vote for this</v-btn>
+                </v-card-actions>
+              </v-card>
+          </v-flex>
+        </v-layout>
     </v-app>
   </div>
 </template>
@@ -30,7 +31,20 @@
 #votebutton {
   color: maroon;
 }
-
+#layout {
+  display: flex;
+  justify-content: center;
+  min-width: 600px;
+}
+#card {
+  min-width: 90%;
+  max-width: 90%;
+  margin: 15px 0px;
+  min-height: 10%;
+}
+#background {
+  height: 100%;
+}
 </style>
 
 
@@ -41,16 +55,29 @@ import axios from 'axios'
 export default {
   data () {
     return {
-      show: false,
-      projects: [],
-
+      projects: []
     }
   },
-  beforeMount() {
-    axios.get('https://localhost:3000/project')
-    .then( function (res) {
-      console.log(res)
-    })
+  methods: {
+    voteUp: function (proj) {
+      //TODO: log votes and check if user has already voted for this
+      //update remote
+      axios.put('http://localhost:3000/project/votes/' + proj._id)
+      .then(function (res) {
+        //update locally
+        proj.votes = proj.votes + 1
+      })
+      .catch(function (err) {
+        handleError(err)
+      })
+    }
+  },
+  created: function() {
+    let self = this
+    axios.get('http://localhost:3000/project/')
+      .then(function (res) {
+        self.projects = res.data
+      })
   }
 }
 </script>

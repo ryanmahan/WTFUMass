@@ -31,4 +31,7 @@ var router = express.Router();
 var project = require('./routes/project')
 app.use('/project', project)
 
+var user = require('./routes/user')
+app.use('/user', user)
+
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

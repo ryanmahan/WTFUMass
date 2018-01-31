@@ -5,8 +5,7 @@
         WTF UMass
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items>
         <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
         <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
         <v-btn @click='pushAbout' flat>About</v-btn>
@@ -21,6 +20,11 @@
 <script>
 export default {
   name: 'app',
+  data () {
+    return {
+      show: true
+    }
+  },
   methods: {
     pushCreate () {
       this.$router.push({

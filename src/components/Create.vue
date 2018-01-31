@@ -85,7 +85,8 @@ export default {
         name: this.name,
         email: this.email,
         title: this.title,
-        description: this.description
+        description: this.description,
+        user: this.user
       })
       .then(function (res) {
         if(res.data === 'failure') {

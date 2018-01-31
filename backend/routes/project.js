@@ -3,8 +3,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
 
-
-
 // Get all projects
 router.get('/', function(req, res) {
   Project.find(function(err, doc) {

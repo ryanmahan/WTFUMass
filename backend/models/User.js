@@ -1,5 +1,5 @@
 var mongoose = require('mongoose')
-var Schema = mongoos.Schema
+var Schema = mongoose.Schema
 
 var User = new mongoose.Schema({
     isAdmin: Boolean,

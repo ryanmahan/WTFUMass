@@ -17,6 +17,7 @@
                 </v-card-text>
                 <v-card-actions>
                   <v-btn outline @click.native='voteUp(project)' id='votebutton'>{{votetext}}</v-btn>
+                  <v-btn outline @click.native='setTag(project)' id='tagbutton'>{{tagtext}}</v-btn>
                 </v-card-actions>
               </v-card>
           </v-flex>
@@ -64,7 +65,8 @@ export default {
     return {
       projects: [],
       currentUser: {},
-      votetext: 'Vote for this'
+      votetext: 'Vote for this',
+      tagtext: 'Add tag'
     }
   },
   methods: {

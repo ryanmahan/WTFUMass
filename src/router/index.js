@@ -6,6 +6,8 @@ import 'vuetify/dist/vuetify.min.css'
 import Home from '../components/Home'
 import Create from '../components/Create'
 import About from '../components/About'
+import Admin from '../components/Admin'
+import Login from '../components/Login'
 
 Vue.use(Router)
 Vue.use(vuetify)
@@ -26,6 +28,16 @@ export default new Router({
       component: About,
       name: 'About',
       path: '/about'
+    },
+    {
+      component: Admin,
+      name: 'Admin',
+      path: '/admin'
+    },
+    {
+      component: Login,
+      name: 'Login',
+      path: '/login'
     }
   ]
 })

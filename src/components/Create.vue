@@ -6,17 +6,6 @@
           <span id='header' class='headline mb-0 left'>What to fix?</span>
           <v-form id="form" ref='createForm'>
             <v-text-field
-              label="First Name"
-              v-model="name"
-              :counter="20"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="Email"
-              v-model="email"
-              required
-            ></v-text-field>
-            <v-text-field
               label="Project Title"
               v-model="title"
               :counter="80"
@@ -72,8 +61,6 @@ export default {
   name: 'Create',
   data () {
     return {
-      name: '',
-      email: '',
       title: '',
       description: ''
     }
@@ -82,21 +69,14 @@ export default {
     submit (evt) {
       console.log('submit ran')
       axios.post('http://localhost:3000/project', {
-        name: this.name,
-        email: this.email,
         title: this.title,
         description: this.description,
         user: this.user
       })
       .then(function (res) {
-        if(res.data === 'failure') {
-          //TODO Feedback for failure path
-          console.log('failed')
-        } else {
           this.$router.push({
             name: 'Home'
           })
-        }
       })
     }
   }

@@ -6,7 +6,8 @@ var Project = new mongoose.Schema({
     title: String,
     description: String,
     votes: Number,
-    submittedBy: {type: Schema.Types.ObjectId, ref: 'User'}
+    submittedBy: {type: Schema.Types.ObjectId, ref: 'User'},
+    votedBy: [{type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 module.exports = mongoose.model('Project', Project);

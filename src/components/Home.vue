@@ -1,6 +1,6 @@
 // eslint-disable-next-line
 <template>
-  <div id="home">
+  <main id="home">
     <v-app id="cardslist">
         <h1 id='header'> What to fix? Submit a fix or vote on some here! </h1>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
@@ -16,13 +16,16 @@
                   {{ project.description }}
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>{{votetext}}</v-btn>
+                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>
+                    <span v-if='!project.voted'>Vote For This</span>
+                    <span v-if='project.voted'>Voted!</span>
+                  </v-btn>
                 </v-card-actions>
               </v-card>
           </v-flex>
         </v-layout>
     </v-app>
-  </div>
+  </main>
 </template>
 
 <style>
@@ -60,6 +63,7 @@ body {
 import axios from 'axios'
 
 export default {
+  name: 'Home',
   data () {
     return {
       projects: [],
@@ -78,8 +82,6 @@ export default {
         user: self.currentUser
       }) 
       .then(function (res) {
-        console.log(res)
-        //update locally
         if (res.data.success) {
           proj.votes = proj.votes + 1
           self.votetext = 'Voted!'
@@ -108,9 +110,15 @@ export default {
   created: function() {
     let self = this
     axios.get('http://localhost:3000/project/')
-      .then(function (res) {
-        self.projects = res.data
-      })
-  }
+    .then(function (res) {
+      self.projects = res.data
+      // self.projects.forEach(function (proj) {
+      //   proj.voted = proj.votedBy.includes(user._id)
+      //   if (user === null) {
+      //     proj.voted = true
+      //   }
+      // })
+    })
+  },
 }
 </script>

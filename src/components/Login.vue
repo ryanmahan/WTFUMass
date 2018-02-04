@@ -78,11 +78,14 @@ export default {
     submit (evt) {
       let self = this
       axios.get('http://localhost:3000/user/login', {
+        params: {
         username: self.username,
         password: self.password
+        }
       })
       .then (function (res) {
         if (res.data.success) {
+          self.$cookie.set('name', res.data.doc.fname, "0")
           self.$router.push({
             name: 'Home'
           })
@@ -93,14 +96,15 @@ export default {
       let self = this
       console.log('req sent')
       axios.post('http://localhost:3000/user/create', {
-        username: self.cusername,
-        password: self.cpassword,
-        fname: self.fname,
-        lname: self.lname,
-        isAdmin: self.admin
+          username: self.cusername,
+          password: self.cpassword,
+          fname: self.fname,
+          lname: self.lname,
+          isAdmin: self.admin
       })
       .then (function (res) {
         if (res.data.success) {
+          self.$cookie.set('name', self.fname)
           self.$router.push({
             name: 'Home'
           })

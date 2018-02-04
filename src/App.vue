@@ -1,23 +1,14 @@
 <template>
   <div id="app">
-    <v-toolbar id="bar" dark>
-      <v-toolbar-title id="title"> 
-        WTF UMass
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-items>
-        <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
-        <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
-        <v-btn @click='pushAbout' flat>About</v-btn>
-        <!-- TODO Login button and page -->
-      </v-toolbar-items>
-    </v-toolbar>
-    <br>
+    <toolbar></toolbar>
     <router-view/>
   </div>
 </template>
 
 <script>
+
+import Toolbar from './components/Toolbar'
+
 export default {
   name: 'app',
   data () {
@@ -25,22 +16,8 @@ export default {
       show: true
     }
   },
-  methods: {
-    pushCreate () {
-      this.$router.push({
-        name: 'Create'
-      })
-    },
-    pushHome () {
-      this.$router.push({
-        name: 'Home'
-      })
-    },
-    pushAbout () {
-      this.$router.push({
-        name: 'About'
-      })
-    }
+  components: {
+    Toolbar
   }
 }
 </script>
@@ -52,11 +29,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-#bar {
-  background-color: maroon;
-}
-#title {
-  color: white
 }
 </style>

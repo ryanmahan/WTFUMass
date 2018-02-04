@@ -31,15 +31,19 @@ router.post('/', function(req, res) {
 router.put('/votes/:id', function(req, res) {
   Project.findById(req.params.id, function (err, doc) {
     let newVotes = doc.votes+1
-    //if has voted (i think the ._id logic needs to be there, this chunk needs testing)
-    // if(doc.votedBy.includes(req.body.user._id)) {
-    //   res.json({success: false})
-    //   return
-    // } else {
-      Project.findByIdAndUpdate(req.params.id, { $set: { votes: newVotes }}, {new: true}, function (err, updated) {
-        res.json({success: true, doc: updated})
+    if(doc.votedBy.includes(req.body.user._id)) {
+      res.json({success: false})
+      return
+    } else {
+      Project.findByIdAndUpdate(req.params.id, { 
+        $set: { votes: newVotes },
+        $push: { votedBy: req.body.user}
+      },
+        {new: true},
+        function (err, updated) {
+          res.json({success: true, doc: updated})
       })
-    //}
+    }
   })
 })
 

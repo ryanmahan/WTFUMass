@@ -17,9 +17,13 @@ Vue.use(VueCookie)
 export default new Router({
   routes: [
     {
+      path: '/',
+      redirect: '/home'
+    },
+    {
       component: Home,
       name: 'Home',
-      path: '/'
+      path: '/home'
     },
     {
       component: Create,

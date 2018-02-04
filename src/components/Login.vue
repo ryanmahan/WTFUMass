@@ -85,16 +85,16 @@ export default {
       })
       .then (function (res) {
         if (res.data.success) {
-          self.$cookie.set('name', res.data.doc.fname, "0")
-          self.$router.push({
-            name: 'Home'
-          })
+          self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
+          console.log(JSON.parse(self.$cookie.get('user')))
+          // self.$router.push({
+          //   name: 'Home'
+          // })
         }
       })
     },
     create (evt) {
       let self = this
-      console.log('req sent')
       axios.post('http://localhost:3000/user/create', {
           username: self.cusername,
           password: self.cpassword,

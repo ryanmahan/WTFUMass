@@ -20,6 +20,7 @@ export default {
     Toolbar
   }
 }
+
 </script>
 
 <style>

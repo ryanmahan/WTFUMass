@@ -28,12 +28,10 @@ router.post('/create', function(req, res) {
 router.get('/login', function(req, res) {
   let username = req.query.username;
   let password = req.query.password;
-  console.log('sent to login' + req.query.username)
   User.findOne({'username': username, 'password': password} , function (err, doc) {
     if(doc === null){
       res.json({success: false, doc: doc})
     } else {
-      console.log(doc)
       res.json({success: true, doc: doc})
     }
   })

@@ -73,6 +73,13 @@ export default {
     voteUp: function (proj) {
       let self = this
       let currentUser = this.logged()
+      if(!currentUser) {
+        alert('You must be logged in to vote')
+        this.$router.push({
+          name: 'Login'
+        })
+        return
+      }
       axios.put('http://localhost:3000/project/votes/' + proj._id, {
         user: currentUser
       })
@@ -106,6 +113,11 @@ export default {
   created: function() {
     let self = this
     let currentUser = this.logged()
+    if(!currentUser) {
+      self.projects.forEach(function (proj) {
+        proj.voted = false
+      })
+    }
     axios.get('http://localhost:3000/project/')
     .then(function (res) {
       self.projects = res.data

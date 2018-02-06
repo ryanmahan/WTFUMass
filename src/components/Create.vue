@@ -68,10 +68,16 @@ export default {
   methods: {
     submit (evt) {
       console.log('submit ran')
+      let currUser = this.logged()
+      if (!currUser) {
+        alert ('You must be logged in to do that')
+        //do we router push login here? Is there a way to save what they have typed in at the time? (cookie?)
+        return
+      }
       axios.post('http://localhost:3000/project', {
         title: this.title,
         description: this.description,
-        user: this.user
+        user: currUser
       })
       .then(function (res) {
           this.$router.push({

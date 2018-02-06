@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <v-toolbar id="bar" dark>
     <v-toolbar-title id="title"> 
       WTF UMass
@@ -9,16 +10,23 @@
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
       <v-btn @click='pushAbout' flat>About</v-btn>
       <v-btn v-if='!loggedIn' @click='pushLogin' flat>{{user}}</v-btn>
-      <v-menu v-if='loggedIn'>
+      <v-menu v-if='loggedIn' >
         <v-btn flat slot='activator'>{{user}}</v-btn>
-          <v-list>
-            <v-list-tile v-for='item in items' :key='item.title'>
-              <v-list-tile-title>{{ item }}</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
+        <v-list offset-y>
+          <v-list-tile @click='logout()'>
+            <v-list-tile-title>Log Out</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click='pushSettings()'>
+            <v-list-tile-title>Settings</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click='pushAbout()'>
+            <v-list-tile-title>About</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
       </v-menu>
     </v-toolbar-items>
   </v-toolbar>
+  </v-app>
 </template>
 
 <style>
@@ -41,10 +49,9 @@ export default {
       user: '',
       loggedIn: false,
       items: [
-      { title: 'Click Me 1' },
-      { title: 'Click Me 3' },
-      { title: 'Click Me 4' },
-      { title: 'Click Me 2' }
+      { title: 'Logout', action: 'logout'},
+      { title: 'Settings', action: 'settings'},
+      { title: 'About WTF', action: 'about'}
     ]
     }
   },
@@ -68,17 +75,28 @@ export default {
       this.$router.push({
         name: 'Login'
       })
+    },
+    pushSettings () {
+      this.$router.push({
+        name: 'Settings'
+      })
+    },
+    logout () {
+      this.$cookie.delete('user')
+      this.loggedIn = false
+      location.reload()
     }
   },
   created: function () {
     let user = this.logged()
-    if (user !== null){
+    if (user){
       this.loggedIn = true
       this.user = user.fname
       console.log(this.user)
     } else {
       this.user = 'login'
     }
+    console.log(this.loggedIn)
   }
 }
 </script>

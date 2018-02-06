@@ -11,7 +11,7 @@ let mixin = Vue.mixin({
     logged: function () {
     let user = this.$cookie.get('user')
     if(user === null){
-      alert('you must log in to do that')
+      return false
     } else {
       return JSON.parse(user)
     }

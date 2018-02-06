@@ -13,7 +13,7 @@
         <v-btn flat slot='activator'>{{user}}</v-btn>
           <v-list>
             <v-list-tile v-for='item in items' :key='item.title'>
-              <v-list-tile-title>{{ user }}</v-list-tile-title>
+              <v-list-tile-title>{{ item }}</v-list-tile-title>
             </v-list-tile>
           </v-list>
       </v-menu>
@@ -71,7 +71,7 @@ export default {
     }
   },
   created: function () {
-    let user = JSON.parse(this.$cookie.get('user'))
+    let user = this.logged()
     if (user !== null){
       this.loggedIn = true
       this.user = user.fname

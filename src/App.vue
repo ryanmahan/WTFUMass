@@ -11,11 +11,6 @@ import Toolbar from './components/Toolbar'
 
 export default {
   name: 'app',
-  data () {
-    return {
-      show: true
-    }
-  },
   components: {
     Toolbar
   }

@@ -16,7 +16,8 @@ router.post('/', function(req, res) {
     submittedBy: req.body.user,
     title: req.body.title,
     description: req.body.description,
-    votes: 1
+    votes: 1,
+    votedBy: [req.body.user._id]
   }, function(err, doc) {
     console.log(doc)
     if (err) {
@@ -30,14 +31,22 @@ router.post('/', function(req, res) {
 // Vote on project
 router.put('/votes/:id', function(req, res) {
   Project.findById(req.params.id, function (err, doc) {
-    let newVotes = doc.votes+1
-    if(doc.votedBy.includes(req.body.user._id)) {
+
+    let includes = false
+    doc.votedBy.forEach(function (voted) {
+      if(req.body.user._id == voted){
+        includes = true
+      }
+    })
+
+    if(includes) {
       res.json({success: false})
       return
     } else {
+      let newVotes = doc.votes+1
       Project.findByIdAndUpdate(req.params.id, { 
         $set: { votes: newVotes },
-        $push: { votedBy: req.body.user}
+        $push: { votedBy: req.body.user._id}
       },
         {new: true},
         function (err, updated) {

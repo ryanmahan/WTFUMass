@@ -66,27 +66,23 @@ export default {
   name: 'Home',
   data () {
     return {
-      projects: [],
-      currentUser: {},
-      votetext: 'Vote for this'
+      projects: []
     }
   },
   methods: {
     voteUp: function (proj) {
       let self = this
-      axios.get('http://localhost:3000/user/current')
-      .then(function (res) {
-        self.currentUser = res.data
-      })
+      let currentUser = this.logged()
       axios.put('http://localhost:3000/project/votes/' + proj._id, {
-        user: self.currentUser
-      }) 
+        user: currentUser
+      })
       .then(function (res) {
         if (res.data.success) {
           proj.votes = proj.votes + 1
-          self.votetext = 'Voted!'
-        } 
-        
+          proj.voted = true
+        } else {
+          alert('You have already voted for this')
+        }
       })
       .catch(function (err) {
         handleError(err)
@@ -109,15 +105,16 @@ export default {
   },
   created: function() {
     let self = this
+    let currentUser = this.logged()
     axios.get('http://localhost:3000/project/')
     .then(function (res) {
       self.projects = res.data
-      // self.projects.forEach(function (proj) {
-      //   proj.voted = proj.votedBy.includes(user._id)
-      //   if (user === null) {
-      //     proj.voted = true
-      //   }
-      // })
+      self.projects.forEach(function (proj) {
+        proj.voted = proj.votedBy.includes(currentUser._id)
+        if (currentUser === null) {
+          proj.voted = true
+        }
+      })
     })
   },
 }

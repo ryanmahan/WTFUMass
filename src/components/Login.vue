@@ -86,10 +86,10 @@ export default {
       .then (function (res) {
         if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
-          console.log(JSON.parse(self.$cookie.get('user')))
-          // self.$router.push({
-          //   name: 'Home'
-          // })
+          location.reload()
+          self.$router.push({
+            name: 'Home'
+          })
         }
       })
     },
@@ -104,7 +104,7 @@ export default {
       })
       .then (function (res) {
         if (res.data.success) {
-          self.$cookie.set('name', self.fname)
+          self.$cookie.set('user', res.data.doc)
           self.$router.push({
             name: 'Home'
           })

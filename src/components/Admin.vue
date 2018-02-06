@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 <template>
   <div id="home">
     <v-app id="cardslist">

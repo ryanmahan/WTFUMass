@@ -47,12 +47,7 @@ export default {
   data () {
     return {
       user: '',
-      loggedIn: false,
-      items: [
-      { title: 'Logout', action: 'logout'},
-      { title: 'Settings', action: 'settings'},
-      { title: 'About WTF', action: 'about'}
-    ]
+      loggedIn: false
     }
   },
   methods: {

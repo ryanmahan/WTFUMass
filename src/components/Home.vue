@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 <template>
   <main id="home">
     <v-app id="cardslist">
@@ -29,26 +28,8 @@
 </template>
 
 <style>
-:root {
-  --main-bg: lightgray;
-}
 #votebutton {
   color: maroon;
-}
-h1 {
-  background-color: var(--main-bg);
-}
-body {
-  background-color: var(--main-bg);
-}
-.application--wrap {
-  min-height: 1px
-}
-#layout {
-  background-color: var(--main-bg);
-  justify-content: center;
-  min-width: 90%;
-  min-height: 0px;
 }
 #card {
   min-width: 90%;

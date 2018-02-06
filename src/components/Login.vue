@@ -1,7 +1,7 @@
 <template>
   <v-app id='app'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <v-flex xs10 offset-xs1 id='flex'>
+    <v-flex xs10 offset-xs1 id='layout'>
       <v-card id="card">
         <span id='header' class='headline mb-0 left'>Login</span>
         <v-form id="form" ref='loginForm'>
@@ -57,8 +57,22 @@
   </v-app>
 </template>
 
-<script>
+<style>
+#card {
+  min-width: 90%;
+  max-width: 90%;
+  margin: 10px auto;
+}
+#layout {
+  background-color: var(--main-bg);
+  justify-content: center;
+  min-width: 90%;
+  min-height: 0px;
+}
+</style>
 
+
+<script>
 import axios from 'axios'
 
 export default {
@@ -104,7 +118,8 @@ export default {
       })
       .then (function (res) {
         if (res.data.success) {
-          self.$cookie.set('user', res.data.doc)
+          location.reload()
+          self.$cookie.set('user', JSON.stringify(res.data.doc))
           self.$router.push({
             name: 'Home'
           })

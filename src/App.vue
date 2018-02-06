@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <toolbar></toolbar>
-    <router-view/>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -25,5 +25,24 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+:root {
+  --main-bg: lightslategray;
+}
+h1 {
+  background-color: var(--main-bg);
+}
+body {
+  background-color: var(--main-bg);
+}
+.application--wrap {
+  min-height: 1px;
+  background-color: var(--main-bg);
+}
+#layout {
+  background-color: var(--main-bg);
+  justify-content: center;
+  min-width: 90%;
+  min-height: 0px;
 }
 </style>

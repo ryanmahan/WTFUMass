@@ -29,23 +29,11 @@
 </template>
 
 <style>
-:root {
-  --main-bg: lightgray;
-}
-.application--wrap {
-  background-color: var(--main-bg)
-}
-body {
-  background-color: var(--main-bg)
-}
-#flex {
-  background-color: var(--main-bg)
-}
 #form {
   margin: 0px 35px;
 }
 #card {
-  margin: 25px auto;
+  margin: 0px auto;
 }
 #header {
   margin: 10px 25px 0px;

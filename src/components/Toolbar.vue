@@ -8,9 +8,8 @@
     <v-toolbar-items>
       <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
-      <v-btn @click='pushAbout' flat>About</v-btn>
       <v-btn v-if='!loggedIn' @click='pushLogin' flat>{{user}}</v-btn>
-      <v-menu v-if='loggedIn' >
+      <v-menu v-if='loggedIn' offset-y>
         <v-btn flat slot='activator'>{{user}}</v-btn>
         <v-list offset-y>
           <v-list-tile @click='logout()'>
@@ -32,6 +31,7 @@
 <style>
 #bar {
   background-color: maroon;
+  margin-bottom: 2%;
 }
 #title {
   color: white

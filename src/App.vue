@@ -27,7 +27,7 @@ export default {
   color: #2c3e50;
 }
 :root {
-  --main-bg: lightslategray;
+  --main-bg: lightgray;
 }
 h1 {
   background-color: var(--main-bg);

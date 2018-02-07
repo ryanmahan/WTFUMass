@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <main id="home">
     <v-app id="cardslist">
         <h1 id='header'> What to fix? Submit a fix or vote on some here! </h1>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
@@ -15,37 +15,37 @@
                   {{ project.description }}
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>{{votetext}}</v-btn>
-                  <v-btn outline @click.native='setTag(project)' id='tagbutton'>{{tagtext}}</v-btn>
+                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>
+                    <span v-if='!project.voted'>Vote For This</span>
+                    <span v-if='project.voted'>Voted!</span>
+                  </v-btn>
+                  <v-menu offset-y>
+                    <v-btn flat slot='activator'>Tags</v-btn>
+                    <v-list>
+                      <v-list-tile :class='tag.class' :key='index' v-for='(tag, index) in tags' @click='setTag(project, tag.title)'>
+                        <v-list-tile-title >{{ tag.title }}</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
+                  <v-menu offset-y>
+                    <v-btn flat slot='activator'>Actions</v-btn>
+                    <v-list>
+                      <v-list-tile :class='action.class' :key='index' v-for='(action, index) in actions' @click='doAction(project, action.title)'>
+                        <v-list-tile-title >{{ action.title }}</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
                 </v-card-actions>
               </v-card>
           </v-flex>
         </v-layout>
     </v-app>
-  </div>
+  </main>
 </template>
 
 <style>
-:root {
-  --main-bg: lightgray;
-}
 #votebutton {
   color: maroon;
-}
-h1 {
-  background-color: var(--main-bg);
-}
-body {
-  background-color: var(--main-bg);
-}
-.application--wrap {
-  min-height: 1px
-}
-#layout {
-  background-color: var(--main-bg);
-  justify-content: center;
-  min-width: 90%;
-  min-height: 0px;
 }
 #card {
   min-width: 90%;
@@ -60,36 +60,56 @@ body {
 import axios from 'axios'
 
 export default {
+  name: 'Admin',
   data () {
     return {
       projects: [],
-      currentUser: {},
-      votetext: 'Vote for this',
-      tagtext: 'Add tag'
+      tags: [
+        //placeholder tags 
+        {title: 'Under Consideration', class: 'yellow accent-4'},
+        {title: 'In Action', class: 'red darken-3'},
+        {title: 'Done!', class: 'green darken-2'},
+        {title: 'No tag', class: 'white'}
+      ],
+      actions: [
+        {title: 'Delete', class: 'red'}
+      ]
     }
   },
   methods: {
     voteUp: function (proj) {
       let self = this
-      axios.get('http://localhost:3000/user/current')
-      .then(function (res) {
-        self.currentUser = res.data
-      })
+      let currentUser = this.logged()
+      if(!currentUser) {
+        alert('You must be logged in to vote')
+        this.$router.push({
+          name: 'Login'
+        })
+        return
+      }
       axios.put('http://localhost:3000/project/votes/' + proj._id, {
-        user: self.currentUser
-      }) 
+        user: currentUser
+      })
       .then(function (res) {
-        console.log(res)
-        //update locally
         if (res.data.success) {
           proj.votes = proj.votes + 1
-          self.votetext = 'Voted!'
-        } 
-        
+          proj.voted = true
+        } else {
+          alert('You have already voted for this')
+        }
       })
       .catch(function (err) {
         handleError(err)
       })
+    },
+    setTag: function (project, tag) {
+      //TODO: Backend model and set route
+      if (tag === 'No tag') {
+        project.tag = 'None'
+      }
+      else {
+        project.tag = tag
+      }
     }
   },
   computed: {
@@ -108,10 +128,23 @@ export default {
   },
   created: function() {
     let self = this
-    axios.get('http://localhost:3000/project/')
-      .then(function (res) {
-        self.projects = res.data
+    let currentUser = this.logged()
+    if(!currentUser || !currentUser.isAdmin) {
+      this.$router.push({
+        name: 'Home'
       })
-  }
+    }
+
+    axios.get('http://localhost:3000/project/')
+    .then(function (res) {
+      self.projects = res.data
+      self.projects.forEach(function (proj) {
+        proj.voted = proj.votedBy.includes(currentUser._id)
+        if (currentUser === null) {
+          proj.voted = true
+        }
+      })
+    })
+  },
 }
 </script>

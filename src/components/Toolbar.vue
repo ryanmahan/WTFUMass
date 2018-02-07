@@ -8,9 +8,9 @@
     <v-toolbar-items>
       <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
-      <v-btn v-if='!loggedIn' @click='pushLogin' flat>{{user}}</v-btn>
+      <v-btn v-if='!loggedIn' @click='pushLogin' flat>{{name}}</v-btn>
       <v-menu v-if='loggedIn' offset-y>
-        <v-btn flat slot='activator'>{{user}}</v-btn>
+        <v-btn flat slot='activator'>{{name}}</v-btn>
         <v-list offset-y>
           <v-list-tile @click='logout()'>
             <v-list-tile-title>Log Out</v-list-tile-title>
@@ -20,6 +20,9 @@
           </v-list-tile>
           <v-list-tile @click='pushAbout()'>
             <v-list-tile-title>About</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile v-if='this.user.isAdmin' @click='pushAdmin()'>
+            <v-list-tile-title>Admin</v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
@@ -47,6 +50,7 @@ export default {
   data () {
     return {
       user: '',
+      name: '',
       loggedIn: false
     }
   },
@@ -76,6 +80,11 @@ export default {
         name: 'Settings'
       })
     },
+    pushAdmin () {
+      this.$router.push({
+        name: 'Admin'
+      })
+    },
     logout () {
       this.$cookie.delete('user')
       this.loggedIn = false
@@ -86,12 +95,11 @@ export default {
     let user = this.logged()
     if (user){
       this.loggedIn = true
-      this.user = user.fname
-      console.log(this.user)
+      this.user = user
+      this.name = user.fname
     } else {
-      this.user = 'login'
+      this.name = 'login'
     }
-    console.log(this.loggedIn)
   }
 }
 </script>

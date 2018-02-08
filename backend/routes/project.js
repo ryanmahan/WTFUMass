@@ -56,4 +56,15 @@ router.put('/votes/:id', function(req, res) {
   })
 })
 
+//tag project
+router.put('/tag/:id', function(req, res) {
+  Project.findByIdAndUpdate(req.params.id, {
+    $set: {tag: req.body.tag},
+  },
+    {new: true},
+    function (err, doc) {
+      res.json(doc)
+    })
+  })
+
 module.exports = router;

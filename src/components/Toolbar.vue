@@ -21,9 +21,6 @@
           <v-list-tile @click='pushAbout()'>
             <v-list-tile-title>About</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile v-if='this.user.isAdmin' @click='pushAdmin()'>
-            <v-list-tile-title>Admin</v-list-tile-title>
-          </v-list-tile>
         </v-list>
       </v-menu>
     </v-toolbar-items>
@@ -78,11 +75,6 @@ export default {
     pushSettings () {
       this.$router.push({
         name: 'Settings'
-      })
-    },
-    pushAdmin () {
-      this.$router.push({
-        name: 'Admin'
       })
     },
     logout () {

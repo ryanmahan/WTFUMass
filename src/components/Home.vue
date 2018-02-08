@@ -7,7 +7,7 @@
               <v-card class="my-2" id='card'>
                 <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" color='red darken-4'></v-progress-linear>
                 <span class='my-0 right'>
-                  <v-chip v-if='project.tag != null' color="red darken-4" text-color="white">{{ project.tag }}</v-chip>
+                  <v-chip v-if='project.tag != null' label color="red darken-4" text-color="white">{{ project.tag }}</v-chip>
                 </span>
                 <v-card-title primary-title>
                   <div>

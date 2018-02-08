@@ -1,12 +1,6 @@
 <template>
   <v-app id='app'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <facebook-login class="button"
-      appId="163971481055567"
-      @login="getUserData"
-      @logout="onLogout"
-      @get-initial-status="getUserData">
-    </facebook-login>
     <v-flex xs10 offset-xs1 id='layout'>
       <v-card id="card">
         <span id='header' class='headline mb-0 left'>Login</span>
@@ -80,13 +74,9 @@
 
 <script>
 import axios from 'axios'
-import facebookLogin from 'facebook-login-vuejs'
 
 export default {
   name: 'Login',
-  components: {
-    facebookLogin
-  },
   data () {
     return {
       username: '',

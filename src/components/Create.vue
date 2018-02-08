@@ -6,17 +6,6 @@
           <span id='header' class='headline mb-0 left'>What to fix?</span>
           <v-form id="form" ref='createForm'>
             <v-text-field
-              label="First Name"
-              v-model="name"
-              :counter="20"
-              required
-            ></v-text-field>
-            <v-text-field
-              label="Email"
-              v-model="email"
-              required
-            ></v-text-field>
-            <v-text-field
               label="Project Title"
               v-model="title"
               :counter="80"
@@ -35,28 +24,20 @@
           </v-form>
         </v-card>
       </v-flex>
+      <v-snackbar top  v-model="snackbar">{{ message }}
+        <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
+        <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
+      </v-snackbar>
     </v-app>
   </div>
 </template>
 
 <style>
-:root {
-  --main-bg: lightgray;
-}
-.application--wrap {
-  background-color: var(--main-bg)
-}
-body {
-  background-color: var(--main-bg)
-}
-#flex {
-  background-color: var(--main-bg)
-}
 #form {
   margin: 0px 35px;
 }
 #card {
-  margin: 25px auto;
+  margin: 0px auto;
 }
 #header {
   margin: 10px 25px 0px;
@@ -72,30 +53,35 @@ export default {
   name: 'Create',
   data () {
     return {
-      name: '',
-      email: '',
       title: '',
-      description: ''
+      description: '',
+      message: '',
+      snackbar: false
     }
   },
   methods: {
     submit (evt) {
       console.log('submit ran')
+      let currUser = this.logged()
+      if (!currUser) {
+        this.message = 'You must be logged in to submit a project'
+        this.snackbar = true
+        return
+      }
       axios.post('http://localhost:3000/project', {
-        name: this.name,
-        email: this.email,
         title: this.title,
-        description: this.description
+        description: this.description,
+        user: currUser
       })
       .then(function (res) {
-        if(res.data === 'failure') {
-          //TODO Feedback for failure path
-          console.log('failed')
-        } else {
           this.$router.push({
             name: 'Home'
           })
-        }
+      })
+    },
+    pushLogin: function () {
+      this.$router.push({
+        name: 'Login'
       })
     }
   }

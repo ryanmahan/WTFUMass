@@ -6,10 +6,24 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+let mixin = Vue.mixin({
+  methods: {
+    logged: function () {
+    let user = this.$cookie.get('user')
+    if(user === null){
+      return false
+    } else {
+      return JSON.parse(user)
+    }
+  }
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  mixins: [mixin],
   template: '<App/>',
   components: { App }
 })

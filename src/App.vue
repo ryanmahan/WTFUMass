@@ -1,44 +1,21 @@
 <template>
   <div id="app">
-    <v-toolbar id="bar" dark>
-      <v-toolbar-title id="title"> 
-        WTF UMass
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
-        <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
-        <v-btn @click='pushAbout' flat>About</v-btn>
-        <!-- TODO Login button and page -->
-      </v-toolbar-items>
-    </v-toolbar>
-    <br>
-    <router-view/>
+    <toolbar></toolbar>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
+
+import Toolbar from './components/Toolbar'
+
 export default {
   name: 'app',
-  methods: {
-    pushCreate () {
-      this.$router.push({
-        name: 'Create'
-      })
-    },
-    pushHome () {
-      this.$router.push({
-        name: 'Home'
-      })
-    },
-    pushAbout () {
-      this.$router.push({
-        name: 'About'
-      })
-    }
+  components: {
+    Toolbar
   }
 }
+
 </script>
 
 <style>
@@ -49,10 +26,23 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#bar {
-  background-color: maroon;
+:root {
+  --main-bg: lightgray;
 }
-#title {
-  color: white
+h1 {
+  background-color: var(--main-bg);
+}
+body {
+  background-color: var(--main-bg);
+}
+.application--wrap {
+  min-height: 1px;
+  background-color: var(--main-bg);
+}
+#layout {
+  background-color: var(--main-bg);
+  justify-content: center;
+  min-width: 90%;
+  min-height: 0px;
 }
 </style>

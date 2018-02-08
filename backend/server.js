@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
   });
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://localhost:27017';
+var mongoDB = 'mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass';
 mongoose.connect(mongoDB);
 
 mongoose.Promise = global.Promise;
@@ -30,5 +30,8 @@ var router = express.Router();
 //Routes
 var project = require('./routes/project')
 app.use('/project', project)
+
+var user = require('./routes/user')
+app.use('/user', user)
 
 app.listen(3000, () => console.log('Example app listening on port 3000!'))

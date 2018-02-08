@@ -15,7 +15,7 @@ app.use(function(req, res, next) {
   });
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://localhost:27017';
+var mongoDB = 'mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass';
 mongoose.connect(mongoDB);
 
 mongoose.Promise = global.Promise;

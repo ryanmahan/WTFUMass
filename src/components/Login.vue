@@ -1,6 +1,12 @@
 <template>
   <v-app id='app'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <facebook-login class="button"
+      appId="163971481055567"
+      @login="getUserData"
+      @logout="onLogout"
+      @get-initial-status="getUserData">
+    </facebook-login>
     <v-flex xs10 offset-xs1 id='layout'>
       <v-card id="card">
         <span id='header' class='headline mb-0 left'>Login</span>
@@ -16,7 +22,7 @@
             required
           ></v-text-field>
           <v-card-actions>
-              <v-btn @click.native='submit()' outline id='submitBtn'>Submit</v-btn>
+              <v-btn @click.native='submit()' outline id='submitBtn'>Login</v-btn>
           </v-card-actions>
         </v-form>
       </v-card>
@@ -74,9 +80,13 @@
 
 <script>
 import axios from 'axios'
+import facebookLogin from 'facebook-login-vuejs'
 
 export default {
   name: 'Login',
+  components: {
+    facebookLogin
+  },
   data () {
     return {
       username: '',

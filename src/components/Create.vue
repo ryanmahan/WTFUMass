@@ -24,6 +24,10 @@
           </v-form>
         </v-card>
       </v-flex>
+      <v-snackbar top  v-model="snackbar">{{ message }}
+        <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
+        <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
+      </v-snackbar>
     </v-app>
   </div>
 </template>
@@ -50,7 +54,9 @@ export default {
   data () {
     return {
       title: '',
-      description: ''
+      description: '',
+      message: '',
+      snackbar: false
     }
   },
   methods: {
@@ -58,8 +64,8 @@ export default {
       console.log('submit ran')
       let currUser = this.logged()
       if (!currUser) {
-        alert ('You must be logged in to do that')
-        //do we router push login here? Is there a way to save what they have typed in at the time? (cookie?)
+        this.message = 'You must be logged in to submit a project'
+        this.snackbar = true
         return
       }
       axios.post('http://localhost:3000/project', {
@@ -71,6 +77,11 @@ export default {
           this.$router.push({
             name: 'Home'
           })
+      })
+    },
+    pushLogin: function () {
+      this.$router.push({
+        name: 'Login'
       })
     }
   }

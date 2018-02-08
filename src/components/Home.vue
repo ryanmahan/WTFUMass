@@ -7,7 +7,7 @@
               <v-card class="my-2" id='card'>
                 <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" color='red darken-4'></v-progress-linear>
                 <span class='my-0 right'>
-                  <v-chip v-if='project.tag != null' outline color="red darken-4" text-color="red darken-4">{{ project.tag }}</v-chip>
+                  <v-chip v-if='project.tag != null' color="red darken-4" text-color="white">{{ project.tag }}</v-chip>
                 </span>
                 <v-card-title primary-title>
                   <div>
@@ -27,7 +27,7 @@
                     <v-menu offset-y >
                       <v-btn flat slot='activator'>Tags</v-btn>
                       <v-list>
-                        <v-list-tile :class='tag.class' :key='index' v-for='(tag, index) in tags' @click='setTag(project, tag.title)'>
+                        <v-list-tile :key='index' v-for='(tag, index) in tags' @click='setTag(project, tag.title)'>
                           <v-list-tile-title >{{ tag.title }}</v-list-tile-title>
                         </v-list-tile>
                       </v-list>
@@ -45,6 +45,10 @@
               </v-card>
           </v-flex>
         </v-layout>
+      <v-snackbar top  v-model="snackbar">{{ message }}
+        <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
+        <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
+      </v-snackbar>
     </v-app>
   </main>
 </template>
@@ -72,15 +76,17 @@ export default {
       projects: [],
       tags: [
         //placeholder tags 
-        {title: 'Potential Project', class: 'yellow accent-4'},
-        {title: 'Currently Working on Project', class: 'red darken-3'},
-        {title: 'Project Done!', class: 'green darken-2'},
-        {title: 'No tag', class: 'white'}
+        {title: 'Potential Project'},
+        {title: 'Currently Working on Project'},
+        {title: 'Project Done!'},
+        {title: 'No tag'}
       ],
       actions: [
         {title: 'Delete', class: 'red'}
       ],
-      isAdmin: false
+      isAdmin: false,
+      message: '',
+      snackbar: false
     }
   },
   methods: {
@@ -88,10 +94,10 @@ export default {
       let self = this
       let currentUser = this.logged()
       if(!currentUser) {
-        alert('You must be logged in to vote')
-        this.$router.push({
-          name: 'Login'
-        })
+        console.log("Clicked!")
+        this.message = 'You must be logged in to vote'
+        this.snackbar = true
+        
         return
       }
       axios.put('http://localhost:3000/project/votes/' + proj._id, {
@@ -102,11 +108,9 @@ export default {
           proj.votes = proj.votes + 1
           proj.voted = true
         } else {
-          alert('You have already voted for this')
+          self.message = 'You have already voted for this'
+          self.snackbar = true
         }
-      })
-      .catch(function (err) {
-        handleError(err)
       })
     },
     setTag: function (project, tag) {
@@ -126,6 +130,11 @@ export default {
         } else if (project.tag === 'Potential Project') {
           project.bar = "35"
         }
+      })
+    },
+    pushLogin: function() {
+      this.$router.push({
+        name: 'Login'
       })
     }
   },
@@ -158,13 +167,14 @@ export default {
         }
         console.log(proj.tag)
         if (proj.tag === 'Project Done!') {
-          proj.bar = "100"
-        } else if (proj.tag === 'Current Working on Project') {
-          proj.bar = "65"
-        } else if (proj.tag === 'Potential Project') {
-          proj.bar = "35"
+          proj.bar = 100
         }
-        console.log(proj)
+        if (proj.tag === 'Currently Working on Project') {
+          proj.bar = 65
+        }
+        if (proj.tag === 'Potential Project') {
+          proj.bar = 35
+        }
       })
     })
   },

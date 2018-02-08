@@ -19,7 +19,10 @@ router.post('/create', function(req, res) {
     if (doc === null){
       res.json({success: false, doc: doc})
     } else {
-      res.json({success: true, doc: doc})
+      res.json({success: true, doc: {
+        fname: doc.fname,
+        _id: doc._id
+      }})
     }
   })
   
@@ -30,9 +33,12 @@ router.get('/login', function(req, res) {
   let password = req.query.password;
   User.findOne({'username': username, 'password': password} , function (err, doc) {
     if(doc === null){
-      res.json({success: false, doc: doc})
+      res.json({success: false})
     } else {
-      res.json({success: true, doc: doc})
+      res.json({success: true, doc: {
+        fname: doc.fname,
+        _id: doc._id
+      }})
     }
   })
 })

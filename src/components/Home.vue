@@ -6,11 +6,10 @@
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
                 <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" color='red darken-4'></v-progress-linear>
-                <span class='my-0 right'>
                   <v-chip v-if='project.tag != null' label color="red darken-4" text-color="white">{{ project.tag }}</v-chip>
-                </span>
-                <v-card-title primary-title>
-                  <div>
+                <br/>
+                <v-card-title class='title' primary-title>
+                  <div id='tag'>
                     <h3 class="headline mb-0 text-xs-left">{{ project.title }}</h3>
                     <div class='title mb-0 text-xs-left'>{{ project.votes }} Votes</div>
                   </div>

@@ -62,21 +62,23 @@ export default {
   methods: {
     submit (evt) {
       console.log('submit ran')
+      let self = this
       let currUser = this.logged()
       if (!currUser) {
         this.message = 'You must be logged in to submit a project'
         this.snackbar = true
         return
       }
-      axios.post('/project', {
+      axios.post('/project/', {
         title: this.title,
         description: this.description,
         user: currUser
       })
       .then(function (res) {
-          this.$router.push({
-            name: 'Home'
-          })
+        console.log('cmon')
+        self.$router.push({
+          name: 'Home'
+        })
       })
     },
     pushLogin: function () {

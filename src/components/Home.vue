@@ -23,7 +23,7 @@
                     <span v-if='!project.voted'>Vote For This</span>
                     <span v-if='project.voted'>Voted!</span>
                   </v-btn>
-                  <div id='adminActions' v-if='isAdmin'>
+                  <div id='adminActions'>
                     <v-menu offset-y >
                       <v-btn flat slot='activator'>Tags</v-btn>
                       <v-list>
@@ -54,13 +54,31 @@
 </template>
 
 <style>
-#votebutton {
-  color: maroon;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
-#card {
+:root {
+  --main-bg: lightgray;
+}
+h1 {
+  background-color: var(--main-bg);
+}
+body {
+  background-color: var(--main-bg);
+}
+.application--wrap {
+  min-height: 1px;
+  background-color: var(--main-bg);
+}
+#layout {
+  background-color: var(--main-bg);
+  justify-content: center;
   min-width: 90%;
-  max-width: 90%;
-  margin: 0px auto;
+  min-height: 0px;
 }
 </style>
 
@@ -100,7 +118,7 @@ export default {
         
         return
       }
-      axios.put('http://localhost:3000/project/votes/' + proj._id, {
+      axios.put('/project/votes/' + proj._id, {
         user: currentUser
       })
       .then(function (res) {
@@ -118,7 +136,7 @@ export default {
       if (tag === 'No tag'){
         tag = null
       }
-      axios.put('http://localhost:3000/project/tag/' + project._id, {
+      axios.put('/project/tag/' + project._id, {
         tag: tag
       })
       .then(function (res) {
@@ -157,8 +175,9 @@ export default {
     let currentUser = this.logged()
     this.isAdmin = currentUser.isAdmin
 
-    axios.get('http://localhost:3000/project/')
+    axios.get('/project/')
     .then(function (res) {
+      console.log(res.data)
       self.projects = res.data
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)

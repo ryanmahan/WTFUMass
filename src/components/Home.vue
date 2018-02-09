@@ -23,7 +23,7 @@
                     <span v-if='!project.voted'>Vote For This</span>
                     <span v-if='project.voted'>Voted!</span>
                   </v-btn>
-                  <div id='adminActions'>
+                  <div id='adminActions' v-if='isAdmin'>
                     <v-menu offset-y >
                       <v-btn flat slot='activator'>Tags</v-btn>
                       <v-list>
@@ -154,6 +154,12 @@ export default {
       this.$router.push({
         name: 'Login'
       })
+    },
+    doAction: function(proj, action) {
+      if(action === 'Delete'){
+        axios.delete('/project/' + proj._id)
+        location.reload()
+      }
     }
   },
   computed: {

@@ -37,7 +37,8 @@ router.get('/login', function(req, res) {
     } else {
       res.json({success: true, doc: {
         fname: doc.fname,
-        _id: doc._id
+        _id: doc._id,
+        isAdmin: doc.isAdmin
       }})
     }
   })

@@ -67,4 +67,8 @@ router.put('/tag/:id', function(req, res) {
     })
   })
 
+router.delete('/:id', function(req, res) {
+  Project.findByIdAndRemove(req.params.id)
+})
+
 module.exports = router;

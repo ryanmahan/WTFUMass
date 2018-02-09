@@ -91,7 +91,7 @@ export default {
   methods: {
     submit (evt) {
       let self = this
-      axios.get('http://localhost:3000/user/login', {
+      axios.get('/user/login', {
         params: {
         username: self.username,
         password: self.password
@@ -109,7 +109,7 @@ export default {
     },
     create (evt) {
       let self = this
-      axios.post('http://localhost:3000/user/create', {
+      axios.post('/user/create', {
           username: self.cusername,
           password: self.cpassword,
           fname: self.fname,

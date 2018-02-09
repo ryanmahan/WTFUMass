@@ -68,7 +68,7 @@ export default {
         this.snackbar = true
         return
       }
-      axios.post('http://localhost:3000/project', {
+      axios.post('/project', {
         title: this.title,
         description: this.description,
         user: currUser

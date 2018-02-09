@@ -25,7 +25,7 @@ app.use('/project', project);
 // Mongoose client with bluebird. Not really sure what bluebird is but it works with the build
 var mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://localhost:27017', { promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass', { promiseLibrary: require('bluebird') })
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 

@@ -15,7 +15,7 @@
               label="Description"
               v-model="description"
               :counter="1000"
-              multi-line
+              auto-grow
               required
             ></v-text-field>
             <v-card-actions>

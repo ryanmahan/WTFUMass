@@ -8,6 +8,7 @@ import Home from '../components/Home'
 import Create from '../components/Create'
 import About from '../components/About'
 import Login from '../components/Login'
+import SignUp from '../components/SignUp'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 
 Vue.use(Router)
@@ -35,6 +36,11 @@ export default new Router({
       component: Login,
       name: 'Login',
       path: '/login'
+    },
+    {
+      component: SignUp,
+      name: 'SignUp',
+      path: '/signup'
     },
     {
       component: PrivacyPolicy,

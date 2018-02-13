@@ -6,8 +6,8 @@
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <!-- for smaller screens -->
-    <v-menu class="hidden-md-and-up" offset-y close-on-content-click open-on-hover>
-      <v-btn slot='activator' icon open-on-hover>
+    <v-menu class="hidden-md-and-up" offset-y close-on-click close>
+      <v-btn slot='activator' icon>
         <v-icon>more_vert</v-icon>
       </v-btn>
       <v-list offset-y>

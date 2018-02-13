@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 const serveStatic = require('serve-static')
 
+
 // Routes required to access differnt endpoints - easier if used within variable as such
 var user = require('./backend/routes/user');
 var project = require('./backend/routes/project');
@@ -24,8 +25,7 @@ app.use('/project', project);
 
 // Mongoose client with bluebird. Not really sure what bluebird is but it works with the build
 var mongoose = require('mongoose');
-mongoose.Promise = require('bluebird');
-mongoose.connect('mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass', { promiseLibrary: require('bluebird') })
+mongoose.connect('mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass')
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 

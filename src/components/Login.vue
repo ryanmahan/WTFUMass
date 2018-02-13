@@ -1,6 +1,5 @@
 <template>
   <v-app id='app'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
     <v-flex xs10 offset-xs1 id='layout'>
       <v-card id="card">
         <span id='header' class='headline mb-0 left'>Login</span>

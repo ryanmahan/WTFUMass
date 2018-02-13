@@ -1,21 +1,22 @@
 <template>
   <div class='create'>
     <v-app id='app'>
-      <v-flex xs10 offset-xs1 id='flex'>
+      <v-flex xs12 align-center id='flex'>
         <v-card id="card">
           <span id='header' class='headline mb-0 left'>What to fix?</span>
           <v-form id="form" ref='createForm'>
             <v-text-field
               label="Project Title"
               v-model="title"
-              :counter="80"
+              :counter="30"
               required
             ></v-text-field>
             <v-text-field
               label="Description"
               v-model="description"
-              :counter="1000"
+              :counter="500"
               auto-grow
+              multi-line
               required
             ></v-text-field>
             <v-card-actions>
@@ -38,6 +39,7 @@
 }
 #card {
   margin: 0px auto;
+  max-width: 90%;
 }
 #header {
   margin: 10px 25px 0px;

@@ -75,7 +75,6 @@ export default {
             name: 'Home'
           })
         } else {
-          console.log('error')
           self.error = true
         }
       })

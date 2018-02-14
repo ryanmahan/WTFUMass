@@ -9,11 +9,13 @@
               <v-text-field
                 label="Username"
                 v-model="username"
+                :rules='userRules'
                 required
               ></v-text-field>
               <v-text-field
                 label="Email"
                 v-model="email"
+                :rules='emailRules'
                 hint='We only send emails when theres an update on your project'
               ></v-text-field>
               <v-text-field
@@ -42,8 +44,21 @@
                 <v-btn @click.native='create()' outline id='submitBtn'>Sign Up</v-btn>
               </v-card-actions>
             </v-form>
+          <v-alert 
+            type='error' 
+            :value='usernameError'
+            transition='slide-x-transition'>
+              Username already taken.
+          </v-alert>
+          <v-alert 
+            type='error' 
+            :value='emailError'
+            transition='slide-x-transition'>
+              Email is already registered with another account.
+          </v-alert>
         </v-card>
       </v-flex>
+      
       <p> Already have an account? <router-link to='Login'> Log in here </router-link></p>
     </div>
   </v-app>
@@ -86,7 +101,9 @@ export default {
       cpassword: '',
       fname: '',
       vis1: false,
-      vis2: false
+      vis2: false,
+      emailError: false,
+      usernameError: false
     }
   },
   methods: {
@@ -111,6 +128,14 @@ export default {
           self.$router.push({
             name: 'Home'
           })
+        } else {
+          console.log('failed')
+          if (res.data.reason === 'username') {
+            self.usernameError = true
+          } 
+          if (res.data.reason === 'email') {
+            self.emailError = true
+          }
         }
       })
     }

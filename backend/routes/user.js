@@ -10,24 +10,43 @@ router.put('/project/:id', function(req, res) {
 })
 
 router.post('/create', function(req, res) {
-  bcrypt.hash(req.body.password, 10, function(err, hash) {
-    User.create({
-      username: req.body.username,
-      password: hash,
-      isAdmin: req.body.isAdmin,
-      fname: req.body.fname,
-        email: req.body.email
-    }, function (err, doc) {
-      if (doc === null){
-        res.json({success: false, doc: doc})
-      } else {
-        res.json({success: true, doc: {
-          fname: doc.fname,
-          _id: doc._id
-        }})
+  let status = true
+  User.findOne({username: req.body.username}, function (err, doc) {
+    if (doc !== null) {
+      res.json({success: false, reason: 'username'})
+      status = false
+      return
+    }
+    User.findOne({email: req.body.email}, function (err, doc) {
+      if (doc !== null) {
+        res.json({success: false, reason: 'email'})
+        status = false
+        return
       }
     })
-    })
+  })
+  .then (function () {
+    if (status) {
+      bcrypt.hash(req.body.password, 10, function(err, hash) {
+        User.create({
+          username: req.body.username,
+          password: hash,
+          isAdmin: false,
+          fname: req.body.fname,
+          email: req.body.email
+        }, function (err, doc) {
+          if (doc === null){
+            res.json({success: false, doc: doc})
+            return
+          } else {
+            res.json({success: true, doc: {
+              fname: doc.fname,
+              _id: doc._id
+            }})
+          }
+        })
+      })
+    }
   })
 })
   
@@ -41,17 +60,18 @@ router.get('/login', function(req, res) {
       res.json({success: false, reason: 'username'})
       return
     } else {
-    bcrypt.compare(password, doc.password, function(err, success) {
-      if(success) {
-        res.json({success: true, doc: {
-          fname: doc.fname,
-          _id: doc._id,
-          isAdmin: doc.isAdmin
-        }})
-      } else {
+      bcrypt.compare(password, doc.password, function(err, success) {
+        if(success) {
+          res.json({success: true, doc: {
+            fname: doc.fname,
+            _id: doc._id,
+            isAdmin: doc.isAdmin
+          }})
+        } else {
           res.json({success: false, reason: 'password'})
-      }
-    })
+        }
+      })
+    }
   })
 })
 

@@ -16,7 +16,7 @@ router.post('/create', function(req, res) {
       password: hash,
       isAdmin: req.body.isAdmin,
       fname: req.body.fname,
-      lname: req.body.lname,
+        email: req.body.email
     }, function (err, doc) {
       if (doc === null){
         res.json({success: false, doc: doc})
@@ -27,7 +27,7 @@ router.post('/create', function(req, res) {
         }})
       }
     })
-    
+    })
   })
 })
   
@@ -35,6 +35,12 @@ router.get('/login', function(req, res) {
   let username = req.query.username;
   let password = req.query.password;
   User.findOne({'username': username} , function (err, doc) {
+    console.log(doc)
+    console.log(err)
+    if (doc === null) {
+      res.json({success: false, reason: 'username'})
+      return
+    } else {
     bcrypt.compare(password, doc.password, function(err, success) {
       if(success) {
         res.json({success: true, doc: {
@@ -43,7 +49,7 @@ router.get('/login', function(req, res) {
           isAdmin: doc.isAdmin
         }})
       } else {
-        res.json({success: false})
+          res.json({success: false, reason: 'password'})
       }
     })
   })

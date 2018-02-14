@@ -15,6 +15,12 @@
             required
             type='password'
           ></v-text-field>
+          <v-alert 
+            type='error' 
+            :value='error'
+            transition='slide-x-transition'>
+              Error logging in, your username or password may be incorrect.
+          </v-alert>
           <v-card-actions>
               <v-btn @click.native='submit()' outline id='submitBtn'>Login</v-btn>
           </v-card-actions>
@@ -48,7 +54,8 @@ export default {
   data () {
     return {
       username: '',
-      password: ''
+      password: '',
+      error: false
     }
   },
   methods: {
@@ -67,6 +74,9 @@ export default {
           self.$router.push({
             name: 'Home'
           })
+        } else {
+          console.log('error')
+          self.error = true
         }
       })
     }

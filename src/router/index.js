@@ -9,6 +9,7 @@ import Create from '../components/Create'
 import About from '../components/About'
 import Login from '../components/Login'
 import SignUp from '../components/SignUp'
+import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 
 Vue.use(Router)

@@ -9,13 +9,11 @@
               <v-text-field
                 label="Username"
                 v-model="username"
-                :rules='userRules'
                 required
               ></v-text-field>
               <v-text-field
                 label="Email"
                 v-model="email"
-                :rules='emailRules'
                 hint='We only send emails when theres an update on your project'
               ></v-text-field>
               <v-text-field
@@ -123,13 +121,15 @@ export default {
 
       .then (function (res) {
         if (res.data.success) {
-          location.reload()
           self.$cookie.set('user', JSON.stringify(res.data.doc))
+          this.$bus.$emit('user', res.data.doc.fname)
           self.$router.push({
-            name: 'Home'
+            name: 'Home',
+            params: {
+              new: true
+            }
           })
         } else {
-          console.log('failed')
           if (res.data.reason === 'username') {
             self.usernameError = true
           } 

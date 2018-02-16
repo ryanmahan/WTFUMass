@@ -18,9 +18,11 @@
             <v-list-tile @click='logout()'>
               <v-list-tile-title>Log Out</v-list-tile-title>
             </v-list-tile>
+            <!--
             <v-list-tile @click='pushSettings()'>
               <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile>
+            -->
             <v-list-tile @click='pushAbout()'>
               <v-list-tile-title>About</v-list-tile-title>
             </v-list-tile>
@@ -38,9 +40,11 @@
           <v-list-tile @click='logout()'>
             <v-list-tile-title>Log Out</v-list-tile-title>
           </v-list-tile>
+          <!--
           <v-list-tile @click='pushSettings()'>
             <v-list-tile-title>Settings</v-list-tile-title>
           </v-list-tile>
+          -->
           <v-list-tile @click='pushAbout()'>
             <v-list-tile-title>About</v-list-tile-title>
           </v-list-tile>
@@ -109,11 +113,17 @@ export default {
     let user = this.logged()
     if (user){
       this.loggedIn = true
-      this.user = user
+      this.user = user      
       this.name = user.fname
     } else {
       this.name = 'Log in'
     }
+  },
+  mounted: function () {
+    this.$bus.$on('user', function (arg) {
+      this.name = arg
+      this.loggedIn = true
+    }.bind(this))
   }
 }
 </script>

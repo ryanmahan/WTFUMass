@@ -1,12 +1,12 @@
 <template>
   <main id="home">
     <v-app id="cardslist">
-        <h1 id='header'> What to fix? Submit a fix or vote on some here! </h1>
+      <tutorial :show='firstLogin'></tutorial>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
                 <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" color='red darken-4'></v-progress-linear>
-                  <v-chip v-if='project.tag != null' label color="red darken-4" text-color="white">{{ project.tag }}</v-chip>
+                  <v-chip v-if='project.tag != null' label id='maroon' text-color="white">{{ project.tag }}</v-chip>
                 <br/>
                 <v-card-title class='title' primary-title>
                   <div id='tag'>
@@ -18,9 +18,11 @@
                   {{ project.description }}
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn outline @click.native='voteUp(project)' id='votebutton'>
+                  <v-btn v-if='!project.voted' outline @click.native='voteUp(project)' id='maroon'>
                     <span v-if='!project.voted'>Vote For This</span>
-                    <span v-if='project.voted'>Voted!</span>
+                  </v-btn>
+                  <v-btn v-if='project.voted' @click.native='voteUp(project)' id='maroon'>
+                    <span class='white--text' v-if='project.voted'>Voted!</span>
                   </v-btn>
                   <div id='adminActions' v-if='isAdmin'>
                     <v-menu offset-y close-on-click>
@@ -79,8 +81,9 @@ body {
   min-width: 90%;
   min-height: 0px;
 }
-#votebutton {
+#maroon {
   color: maroon;
+  background-color: maroon;
 }
 </style>
 
@@ -88,14 +91,17 @@ body {
 <script>
 
 import axios from 'axios'
+import Tutorial from './Tutorial'
 
 export default {
   name: 'Admin',
+  components: {
+    Tutorial
+  },
   data () {
     return {
       projects: [],
       tags: [
-        //placeholder tags 
         {title: 'Potential Project'},
         {title: 'Currently Working on Project'},
         {title: 'Project Done!'},
@@ -106,7 +112,8 @@ export default {
       ],
       isAdmin: false,
       message: '',
-      snackbar: false
+      snackbar: false,
+      firstLogin: false
     }
   },
   methods: {
@@ -134,7 +141,6 @@ export default {
       })
     },
     setTag: function (project, tag) {
-      //TODO: Backend model and set route
       if (tag === 'No tag'){
         tag = null
       }
@@ -185,14 +191,12 @@ export default {
 
     axios.get('/project/')
     .then(function (res) {
-      console.log(res.data)
       self.projects = res.data
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)
         if (currentUser === null) {
           proj.voted = true
         }
-        console.log(proj.tag)
         if (proj.tag === 'Project Done!') {
           proj.bar = 100
         }
@@ -204,6 +208,11 @@ export default {
         }
       })
     })
+    if (this.$route.params !== undefined) {
+      if (this.$route.params.new) {
+      this.firstLogin = true
+      }
+    }
   },
 }
 </script>

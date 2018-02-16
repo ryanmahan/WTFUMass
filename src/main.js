@@ -19,6 +19,7 @@ let mixin = Vue.mixin({
   }
 })
 
+Vue.prototype.$bus = new Vue();
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

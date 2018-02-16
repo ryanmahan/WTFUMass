@@ -77,7 +77,6 @@ export default {
         user: currUser
       })
       .then(function (res) {
-        console.log('cmon')
         self.$router.push({
           name: 'Home'
         })

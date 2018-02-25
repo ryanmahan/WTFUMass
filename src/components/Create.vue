@@ -50,6 +50,9 @@
 </style>
 <script>
 import axios from 'axios'
+import Filter from 'bad-words'
+
+ var filter = new Filter();
 
 export default {
   name: 'Create',
@@ -63,7 +66,6 @@ export default {
   },
   methods: {
     submit (evt) {
-      console.log('submit ran')
       let self = this
       let currUser = this.logged()
       if (!currUser) {
@@ -71,16 +73,32 @@ export default {
         this.snackbar = true
         return
       }
-      axios.post('/project/', {
-        title: this.title,
-        description: this.description,
-        user: currUser
-      })
-      .then(function (res) {
-        self.$router.push({
-          name: 'Home'
+      if (!this.checkSubmission(this.title, 30)) {return}
+      else if (!this.checkSubmission(this.description, 500)) {return}
+      else {
+        axios.post('/project/', {
+          title: this.title,
+          description: this.description,
+          user: currUser
         })
-      })
+        .then(function (res) {
+          self.$router.push({
+            name: 'Home'
+          })
+        })
+      }
+    },
+    checkSubmission: function (check, length) {
+      if(check.length > length){
+        this.message = 'Submission length too long'
+        this.snackbar = true
+        return false
+      }
+      else if(filter.isProfane(check)) {
+        this.message = 'Submission contains profanity'
+        this.snackbar = true
+        return false
+      }
     },
     pushLogin: function () {
       this.$router.push({

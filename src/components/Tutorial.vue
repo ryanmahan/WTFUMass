@@ -18,7 +18,7 @@
                 </p>
                 <v-card class="my-2" id='card'>
                   <v-progress-linear class='my-0' v-bind:value='35' height="4" color='red darken-4'></v-progress-linear>
-                    <v-chip label id='maroon' text-color="white">Currently working on Project</v-chip>
+                    <v-chip label color='primary' text-color="white">Currently working on Project</v-chip>
                   <br/>
                   <v-card-title class='title' primary-title>
                     <div id='tag'>
@@ -30,13 +30,13 @@
                     A website for UMass Students to submit projects for the Student Government Association to work on
                   </v-card-text>
                   <v-card-actions>
-                    <v-btn outline  id='maroon'>
+                    <v-btn outline color='primary'>
                     <span>Vote For This</span>
                     </v-btn>
                   </v-card-actions>
                 </v-card>
               </v-card>
-              <v-btn outline id='maroon' @click="e1 = 2">Continue</v-btn>
+              <v-btn outline color='primary' @click="e1 = 2">Continue</v-btn>
               <v-btn outline @click='visible=false'>Close</v-btn>
             </v-stepper-content>
             <v-stepper-content step="2">

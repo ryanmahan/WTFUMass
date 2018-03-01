@@ -67,11 +67,19 @@ router.put('/tag/:id', function(req, res) {
     })
   })
 
-router.delete('/:id', function(req, res) {
-  Project.findByIdAndRemove(req.params.id, function (err) {
-    console.log('error')
-    console.log(err)
+router.put('/reply/:id', function(req, res) {
+  console.log(req.body.reply)
+  Project.findByIdAndUpdate(req.params.id, {
+    $set: {reply: req.body.value},
+  },
+  {new: true},
+  function (err, doc) {
+    res.json(doc)
   })
+})
+
+router.delete('/:id', function(req, res) {
+  Project.findByIdAndRemove(req.params.id)
 })
 
 module.exports = router;

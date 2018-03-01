@@ -8,7 +8,8 @@ var Project = new mongoose.Schema({
     votes: Number,
     submittedBy: {type: Schema.Types.ObjectId, ref: 'User'},
     votedBy: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    tag: String
+    tag: String,
+    reply: String
 })
 
 module.exports = mongoose.model('Project', Project);

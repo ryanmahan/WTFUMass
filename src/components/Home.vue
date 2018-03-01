@@ -16,6 +16,11 @@
                 </v-card-title>
                 <v-card-text class='subheading text-xs-left autoscroll'>
                   {{ project.description }}
+                  <div v-if='project.reply != None'>
+                    <hr>
+                    <h3> SGA Reply </h3>
+                    <p> {{project.reply}} </p>
+                  </div>
                 </v-card-text>
                 <v-card-actions>
                   <v-btn v-if='!project.voted' outline @click.native='voteUp(project)' id='maroon'>
@@ -24,6 +29,7 @@
                   <v-btn v-if='project.voted' @click.native='voteUp(project)' id='maroon'>
                     <span class='white--text' v-if='project.voted'>Voted!</span>
                   </v-btn>
+                  <!-- Admin Actions -->
                   <div id='adminActions' v-if='isAdmin'>
                     <v-menu offset-y close-on-click>
                       <v-btn flat slot='activator'>Tags</v-btn>
@@ -50,6 +56,24 @@
         <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
         <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
       </v-snackbar>
+      <v-dialog v-model="replyDialog" max-width="500px">
+          <v-card>
+            <v-card-title>
+              Reply
+            </v-card-title>
+            <v-card-text>
+              <v-text-field
+                :items="select"
+                label="Reply to project"
+                item-value="text"
+                v-model='reply'
+              ></v-text-field>
+            </v-card-text>
+            <v-card-actions>
+              <v-btn id='maroon' flat @click.stop="replyfunc()">Reply</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
     </v-app>
   </main>
 </template>
@@ -108,12 +132,16 @@ export default {
         {title: 'No tag'}
       ],
       actions: [
-        {title: 'Delete', class: 'red'}
+        {title: 'Delete', class: 'red'},
+        {title: 'Reply'}
       ],
       isAdmin: false,
       message: '',
       snackbar: false,
-      firstLogin: false
+      firstLogin: false,
+      replyDialog: false,
+      replyTo: {},
+      reply: ''
     }
   },
   methods: {
@@ -158,6 +186,17 @@ export default {
         }
       })
     },
+    replyfunc: function () {
+      this.replyDialog = false
+      axios.put('/project/reply/' + this.replyTo._id, {
+          value: this.reply
+      })
+      .then(function (res) {
+        if (res.data.success) {
+          proj.reply = this.reply
+        }
+      })
+    },
     pushLogin: function() {
       this.$router.push({
         name: 'Login'
@@ -167,6 +206,9 @@ export default {
       if(action === 'Delete'){
         axios.delete('/project/' + proj._id)
         location.reload()
+      } else if(action == 'Reply'){
+        this.replyTo = proj
+        this.replyDialog = true
       }
     }
   },

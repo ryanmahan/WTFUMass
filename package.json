@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "bad-words": "^1.6.1",
     "bcrypt": "^1.0.3",
     "express": "^4.16.2",
     "vue": "^2.5.2",

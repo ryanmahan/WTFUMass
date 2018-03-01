@@ -34,6 +34,7 @@
                     <AdminTools></AdminTools>
                   </div>
                 </v-card-actions>
+                <i><span class='caption left my-0'>{{project.dateCreated}}</span></i>
               </v-card>
           </v-flex>
         </v-layout>
@@ -114,23 +115,10 @@ export default {
   data () {
     return {
       projects: [],
-      tags: [
-        {title: 'Potential Project'},
-        {title: 'Currently Working on Project'},
-        {title: 'Project Done!'},
-        {title: 'No tag'}
-      ],
-      actions: [
-        {title: 'Delete', class: 'red'},
-        {title: 'Reply'}
-      ],
       isAdmin: false,
       message: '',
       snackbar: false,
       firstLogin: false,
-      replyDialog: false,
-      replyTo: {},
-      reply: ''
     }
   },
   methods: {
@@ -157,49 +145,11 @@ export default {
         }
       })
     },
-    setTag: function (project, tag) {
-      if (tag === 'No tag'){
-        tag = null
-      }
-      axios.put('/project/tag/' + project._id, {
-        tag: tag
-      })
-      .then(function (res) {
-        project.tag = tag
-        if (project.tag === 'Project Done!') {
-          project.bar = "100"
-        } else if (project.tag === 'Currently Working on Project') {
-          project.bar = "65"
-        } else if (project.tag === 'Potential Project') {
-          project.bar = "35"
-        }
-      })
-    },
-    replyfunc: function () {
-      this.replyDialog = false
-      axios.put('/project/reply/' + this.replyTo._id, {
-          value: this.reply
-      })
-      .then(function (res) {
-        if (res.data.success) {
-          proj.reply = this.reply
-        }
-      })
-    },
     pushLogin: function() {
       this.$router.push({
         name: 'Login'
       })
     },
-    doAction: function(proj, action) {
-      if(action === 'Delete'){
-        axios.delete('/project/' + proj._id)
-        location.reload()
-      } else if(action == 'Reply'){
-        this.replyTo = proj
-        this.replyDialog = true
-      }
-    }
   },
   computed: {
     sortedByVote: function() {
@@ -222,6 +172,7 @@ export default {
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
+      console.log(self.projects)
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)
         if (currentUser === null) {

@@ -6,6 +6,7 @@ var Project = new mongoose.Schema({
     title: String,
     description: String,
     votes: Number,
+    dateCreated: String,
     submittedBy: {type: Schema.Types.ObjectId, ref: 'User'},
     votedBy: [{type: Schema.Types.ObjectId, ref: 'User'}],
     tag: String,

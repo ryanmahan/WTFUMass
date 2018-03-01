@@ -76,6 +76,7 @@ export default {
       if (!this.checkSubmission(this.title, 30)) {return}
       else if (!this.checkSubmission(this.description, 500)) {return}
       else {
+        console.log('sending project')
         axios.post('/project/', {
           title: this.title,
           description: this.description,
@@ -99,6 +100,7 @@ export default {
         this.snackbar = true
         return false
       }
+      return true
     },
     pushLogin: function () {
       this.$router.push({

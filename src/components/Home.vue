@@ -8,15 +8,15 @@
                 <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" primary></v-progress-linear>
                   <v-chip v-if='project.tag != null' label color='primary' text-color="white">{{ project.tag }}</v-chip>
                 <br/>
-                <v-card-title class='title' primary-title>
+                <v-card-title class='title text-xs-left' primary-title>
                   <div id='tag'>
                     <h3 class="headline mb-0 tepentatholonxt-xs-left">{{ project.title }}</h3>
-                    <div class='title mb-0 text-xs-left'>{{ project.votes }} Votes</div>
+                    <div class='title my-1 text-xs-left'>{{ project.votes }} Votes</div>
                   </div>
                 </v-card-title>
                 <v-card-text class='subheading text-xs-left autoscroll'>
                   {{ project.description }}
-                  <div v-if='project.reply != None'>
+                  <div v-if='project.reply != None' id='reply'>
                     <hr>
                     <h3> SGA Reply </h3>
                     <p> {{project.reply}} </p>
@@ -92,6 +92,9 @@ body {
 }
 #adminActions {
   background-color: white;
+}
+#reply {
+  margin-top: 15px;
 }
 </style>
 

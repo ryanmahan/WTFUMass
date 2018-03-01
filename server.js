@@ -9,7 +9,6 @@ const serveStatic = require('serve-static')
 // Routes required to access differnt endpoints - easier if used within variable as such
 var user = require('./backend/routes/user');
 var project = require('./backend/routes/project');
-// app uses express as the server. Should be familiar.
 var app = express();
 
 app.use(bodyParser.json());
@@ -17,19 +16,16 @@ app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(express.static(path.join(__dirname, 'dist')));
 app.set('view engine', 'html');
 
-//Setting up the User Endpoint
 app.use('/user', user);
-
-//Setting up the Systems Endpoint
 app.use('/project', project);
 
-// Mongoose client with bluebird. Not really sure what bluebird is but it works with the build
+
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass')
   .then(() =>  console.log('connection succesful'))
   .catch((err) => console.error(err));
 
-// catch 404 and forward to error handler
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -48,9 +44,9 @@ app.use(function(err, req, res, next) {
 });
 
 var server_port = process.env.YOUR_PORT || process.env.PORT || 3000;
-var server_host = process.env.YOUR_HOST || '0.0.0.0';
+var server_host = process.env.HOST || '0.0.0.0';
 app.listen(server_port, server_host, function() {
     console.log('Listening on port %s:%d', server_port);
 });
-//export badboy back to html/webpage
+
 module.exports = app;

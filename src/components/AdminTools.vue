@@ -4,7 +4,7 @@
       <v-menu offset-y close-on-click>
         <v-btn flat color='primary' slot='activator'>Tags</v-btn>
         <v-list>
-          <v-list-tile :key='index' v-for='(tag, index) in tags' @click='setTag(project, tag.title)'>
+          <v-list-tile :key='index' v-for='(tag, index) in tags' @click='setTag(tag.title)'>
             <v-list-tile-title >{{ tag.title }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -12,7 +12,7 @@
       <v-menu offset-y close-on-click>
         <v-btn flat color='primary' slot='activator'>Actions</v-btn>
         <v-list>
-          <v-list-tile :class='action.class' :key='index' v-for='(action, index) in actions' @click='doAction(project, action.title)'>
+          <v-list-tile :class='action.class' :key='index' v-for='(action, index) in actions' @click='doAction(action.title)'>
             <v-list-tile-title >{{ action.title }}</v-list-tile-title>
           </v-list-tile>
         </v-list>
@@ -50,6 +50,9 @@ import axios from 'axios'
 
 export default {
   name: 'Admin',
+  props: [
+    'project'
+  ],
   data () {
     return {
       tags: [
@@ -68,41 +71,43 @@ export default {
     }
   },
   methods: {
-    setTag: function (project, tag) {
+    setTag: function (tag) {
+      let self = this
       if (tag === 'No tag'){
         tag = null
       }
-      axios.put('/project/tag/' + project._id, {
+      axios.put('/project/tag/' + this.$props.project._id, {
         tag: tag
       })
       .then(function (res) {
-        project.tag = tag
-        if (project.tag === 'Project Done!') {
-          project.bar = "100"
-        } else if (project.tag === 'Currently Working on Project') {
-          project.bar = "65"
-        } else if (project.tag === 'Potential Project') {
-          project.bar = "35"
+        self.$props.project.tag = tag
+        if (self.$props.project.tag === 'Project Done!') {
+          self.$props.project.bar = "100"
+        } else if (self.$props.project.tag === 'Currently Working on Project') {
+          self.$props.project.bar = "65"
+        } else if (self.$props.project.tag === 'Potential Project') {
+          self.$props.project.bar = "35"
         }
       })
     },
     replyfunc: function () {
-      this.replyDialog = false
-      axios.put('/project/reply/' + this.replyTo._id, {
-          value: this.reply
+      let self = this
+      self.replyDialog = false
+      axios.put('/project/reply/' + self.replyTo._id, {
+          value: self.reply
       })
       .then(function (res) {
         if (res.data.success) {
-          proj.reply = this.reply
+          self.$props.proj.reply = self.reply
         }
       })
     },
-    doAction: function(proj, action) {
+    doAction: function(action) {
       if(action === 'Delete'){
-        axios.delete('/project/' + proj._id)
+        axios.delete('/project/' + this.$props.project._id)
         location.reload()
       } else if(action == 'Reply'){
-        this.replyTo = proj
+        this.replyTo = this.$props.project
         this.replyDialog = true
       }
     }

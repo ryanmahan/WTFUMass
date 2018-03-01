@@ -30,7 +30,7 @@
                     <span class='white--text' v-if='project.voted'>Voted!</span>
                   </v-btn>
                   <div id='adminActions' v-if='isAdmin'>
-                    <AdminTools></AdminTools>
+                    <AdminTools :project='project'></AdminTools>
                   </div>
                 </v-card-actions>
                 <i><span class='caption left my-0'>{{project.dateCreated}}</span></i>

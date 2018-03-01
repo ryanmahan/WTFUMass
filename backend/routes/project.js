@@ -81,7 +81,8 @@ router.put('/reply/:id', function(req, res) {
 })
 
 router.delete('/:id', function(req, res) {
-  Project.findByIdAndRemove(req.params.id)
+  Project.findByIdAndRemove(req.params.id, function (err, doc) {
+  })
 })
 
 module.exports = router;

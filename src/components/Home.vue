@@ -31,22 +31,7 @@
                   </v-btn>
                   <!-- Admin Actions -->
                   <div id='adminActions' v-if='isAdmin'>
-                    <v-menu offset-y close-on-click>
-                      <v-btn flat slot='activator'>Tags</v-btn>
-                      <v-list>
-                        <v-list-tile :key='index' v-for='(tag, index) in tags' @click='setTag(project, tag.title)'>
-                          <v-list-tile-title >{{ tag.title }}</v-list-tile-title>
-                        </v-list-tile>
-                      </v-list>
-                    </v-menu >
-                    <v-menu offset-y close-on-click>
-                      <v-btn flat slot='activator'>Actions</v-btn>
-                      <v-list>
-                        <v-list-tile :class='action.class' :key='index' v-for='(action, index) in actions' @click='doAction(project, action.title)'>
-                          <v-list-tile-title >{{ action.title }}</v-list-tile-title>
-                        </v-list-tile>
-                      </v-list>
-                    </v-menu>
+                    <AdminTools></AdminTools>
                   </div>
                 </v-card-actions>
               </v-card>
@@ -109,18 +94,22 @@ body {
   color: maroon;
   background-color: maroon;
 }
+#adminActions {
+  background-color: white;
+}
 </style>
 
 
 <script>
-
 import axios from 'axios'
 import Tutorial from './Tutorial'
+import AdminTools from './AdminTools'
 
 export default {
   name: 'Admin',
   components: {
-    Tutorial
+    Tutorial,
+    AdminTools
   },
   data () {
     return {
@@ -230,7 +219,6 @@ export default {
     let self = this
     let currentUser = this.logged()
     this.isAdmin = currentUser.isAdmin
-
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data

@@ -9,7 +9,8 @@ var Project = new mongoose.Schema({
     submittedBy: {type: Schema.Types.ObjectId, ref: 'User'},
     votedBy: [{type: Schema.Types.ObjectId, ref: 'User'}],
     tag: String,
-    reply: String
+    reply: String,
+    status: String,
 })
 
 module.exports = mongoose.model('Project', Project);

@@ -122,7 +122,7 @@ export default {
       .then (function (res) {
         if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc))
-          this.$bus.$emit('user', res.data.doc.fname)
+          self.$bus.$emit('user', res.data.doc.fname)
           self.$router.push({
             name: 'Home',
             params: {

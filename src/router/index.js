@@ -13,7 +13,14 @@ import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 
 Vue.use(Router)
-Vue.use(vuetify)
+Vue.use(vuetify, {
+  theme: {
+    primary: '#800000',
+    secondary: '#d3d3d3',
+    accent: '#748798',
+    error: '#b71c1c'
+  }
+})
 Vue.use(VueCookie)
 
 export default new Router({

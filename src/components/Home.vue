@@ -5,8 +5,8 @@
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
-                <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" color='red darken-4'></v-progress-linear>
-                  <v-chip v-if='project.tag != null' label id='maroon' text-color="white">{{ project.tag }}</v-chip>
+                <v-progress-linear class='my-0' v-bind:value='project.bar' height="4" primary></v-progress-linear>
+                  <v-chip v-if='project.tag != null' label color='primary' text-color="white">{{ project.tag }}</v-chip>
                 <br/>
                 <v-card-title class='title' primary-title>
                   <div id='tag'>
@@ -23,13 +23,12 @@
                   </div>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn v-if='!project.voted' outline @click.native='voteUp(project)' id='maroon'>
+                  <v-btn v-if='!project.voted' outline @click.native='voteUp(project)' color='primary'>
                     <span v-if='!project.voted'>Vote For This</span>
                   </v-btn>
-                  <v-btn v-if='project.voted' @click.native='voteUp(project)' id='maroon'>
+                  <v-btn v-if='project.voted' @click.native='voteUp(project)' color='primary'>
                     <span class='white--text' v-if='project.voted'>Voted!</span>
                   </v-btn>
-                  <!-- Admin Actions -->
                   <div id='adminActions' v-if='isAdmin'>
                     <AdminTools></AdminTools>
                   </div>
@@ -56,7 +55,7 @@
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn id='maroon' flat @click.stop="replyfunc()">Reply</v-btn>
+              <v-btn color='primary' flat @click.stop="replyfunc()">Reply</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -90,10 +89,6 @@ body {
   justify-content: center;
   min-width: 90%;
   min-height: 0px;
-}
-#maroon {
-  color: maroon;
-  background-color: maroon;
 }
 #adminActions {
   background-color: white;

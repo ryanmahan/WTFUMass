@@ -62,11 +62,11 @@
                   required
                 ></v-text-field>
               <v-card-actions>
-                <v-btn outline id='maroon'>Submit</v-btn>
+                <v-btn outline color='primary'>Submit</v-btn>
               </v-card-actions>
             </v-form>
             </v-card>
-              <v-btn outline id='maroon' @click="e1 = 3">Continue</v-btn>
+              <v-btn outline color='primary' @click="e1 = 3">Continue</v-btn>
               <v-btn outline @click='visible=false'>Close</v-btn>
             </v-stepper-content>
             <v-stepper-content step="3">
@@ -78,7 +78,7 @@
                 <br>
                 <span class='caption'> Created by Ryan Mahan <br> <a href='https://github.com/ryanmahan/wtfumass'> View me on GitHub </a> </span>
               </v-card>
-              <v-btn outline id='maroon' @click="visible = false" >Continue</v-btn>
+              <v-btn outline color='primary' @click="visible = false" >Continue</v-btn>
               <v-btn outline @click='visible=false'>Close</v-btn>
             </v-stepper-content>
           </v-stepper-items>
@@ -87,13 +87,6 @@
     </v-app>
   </div>
 </template>
-
-<style>
-#maroon {
-  color: maroon;
-  background-color: maroon;
-}
-</style>
 
 <script>
 export default {

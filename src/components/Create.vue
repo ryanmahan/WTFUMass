@@ -20,7 +20,7 @@
               required
             ></v-text-field>
             <v-card-actions>
-               <v-btn @click.native='submit()' outline id='submitBtn'>Submit</v-btn>
+               <v-btn @click.native='submit()' outline color='primary'>Submit</v-btn>
             </v-card-actions>
           </v-form>
         </v-card>
@@ -43,9 +43,6 @@
 }
 #header {
   margin: 10px 25px 0px;
-}
-#submitBtn {
-  color: maroon;
 }
 </style>
 <script>

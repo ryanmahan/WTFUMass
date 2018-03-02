@@ -187,11 +187,15 @@ export default {
         }
       })
     })
-    if (this.$route.params !== undefined) {
-      if (this.$route.params.new) {
+    if(this.$cookie.get('iwashere') === null) {
+      this.$cookie.set('iwashere', new Date().toString, 60 * 60 * 24 * 30 * 12)
       this.firstLogin = true
-      }
     }
+    // if (this.$route.params !== undefined) {
+    //   if (this.$route.params.new) {
+    //   this.firstLogin = true
+    //   }
+    // }
   },
 }
 </script>

@@ -49,7 +49,8 @@
 import axios from 'axios'
 import Filter from 'bad-words'
 
- var filter = new Filter();
+var filter = new Filter();
+filter.removeWords('umass')
 
 export default {
   name: 'Create',
@@ -86,12 +87,14 @@ export default {
       }
     },
     checkSubmission: function (check, length) {
+      
       if(check.length > length){
         this.message = 'Submission length too long'
         this.snackbar = true
         return false
       }
       else if(filter.isProfane(check)) {
+        check = filter.clean(check)
         this.message = 'Submission contains profanity'
         this.snackbar = true
         return false

@@ -27,6 +27,7 @@
           </v-card-actions>
         </v-form>
       </v-card>
+      <v-button @click='googleLogin()' primary>Google Log in (unofficial)</v-button>
       <p> Dont have an account? <router-link to='SignUp'> Sign up here </router-link></p>
     </v-flex>
   </v-app>
@@ -80,10 +81,9 @@ export default {
           self.error = true
         }
       })
-    }
-  },
-  created: function () {
-    this.$googleAuth().signIn(function (authorizationCode) { 
+    },
+    googleLogin () {
+      this.$googleAuth().signIn(function (authorizationCode) { 
 
       // things to do when sign-in succeeds
       console.log(authorizationCode)
@@ -99,6 +99,7 @@ export default {
     }, function (error) {
       // things to do when sign-in fails
     })
+    }
   }
 }
 </script>

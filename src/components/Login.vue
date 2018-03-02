@@ -27,6 +27,7 @@
           </v-card-actions>
         </v-form>
       </v-card>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
       <v-button @click='googleLogin()' primary>Google Log in (unofficial)</v-button>
       <p> Dont have an account? <router-link to='SignUp'> Sign up here </router-link></p>
     </v-flex>
@@ -50,7 +51,14 @@
 
 <script>
 import axios from 'axios'
-import Vue from 'vue'
+
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+}
 
 export default {
   name: 'Login',
@@ -83,8 +91,6 @@ export default {
       })
     },
     googleLogin () {
-      import Vue from 'vue'
-
       // Just add in this line
       this.$googleAuth().directAccess()
 

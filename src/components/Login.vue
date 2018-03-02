@@ -83,22 +83,16 @@ export default {
       })
     },
     googleLogin () {
-      this.$googleAuth().signIn(function (authorizationCode) { 
+      import Vue from 'vue'
 
-      // things to do when sign-in succeeds
-      console.log(authorizationCode)
-      // You can send the authorizationCode to your backend server for further processing, for example
-      // this.$http.post('http://your/backend/server', { code: authorizationCode, redirect_uri: 'postmessage' }).then(function (response) {
-      //   if (response.body) {
-      //     // ...
-      //   }
-      // }, function (error) {
-      //   console.log(error)
-      // })
-      
-    }, function (error) {
-      // things to do when sign-in fails
-    })
+      // Just add in this line
+      this.$googleAuth().directAccess()
+
+      this.$googleAuth().signIn(function (googleUser) { 
+        // things to do when sign-in succeeds
+      }, function (error) {
+        // things to do when sign-in fails
+      })
     }
   }
 }

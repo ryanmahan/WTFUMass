@@ -1,5 +1,6 @@
 <template>
   <v-app id='app'>
+    <meta name="google-site-verification" content="lCO-Y0_siXEtcD9_fIxqGufrGE9KjGi6wK1Siq6W4Rk" />
     <v-flex xs10 offset-xs1 id='layout'>
       <v-card id="card">
         <span id='header' class='headline mb-0 left'>Login</span>
@@ -48,6 +49,7 @@
 
 <script>
 import axios from 'axios'
+import Vue from 'vue'
 
 export default {
   name: 'Login',
@@ -55,7 +57,7 @@ export default {
     return {
       username: '',
       password: '',
-      error: false
+      error: false,
     }
   },
   methods: {
@@ -79,6 +81,24 @@ export default {
         }
       })
     }
+  },
+  created: function () {
+    this.$googleAuth().signIn(function (authorizationCode) { 
+
+      // things to do when sign-in succeeds
+      console.log(authorizationCode)
+      // You can send the authorizationCode to your backend server for further processing, for example
+      // this.$http.post('http://your/backend/server', { code: authorizationCode, redirect_uri: 'postmessage' }).then(function (response) {
+      //   if (response.body) {
+      //     // ...
+      //   }
+      // }, function (error) {
+      //   console.log(error)
+      // })
+      
+    }, function (error) {
+      // things to do when sign-in fails
+    })
   }
 }
 </script>

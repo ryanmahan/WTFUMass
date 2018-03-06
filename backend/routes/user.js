@@ -4,6 +4,10 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt')
 var User = require('../models/User.js');
 
+const {OAuth2Client} = require('google-auth-library');
+CLIENT_ID = '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com'
+const client = new OAuth2Client(CLIENT_ID);
+
 
 router.put('/project/:id', function(req, res) {
   User.findByIdAndUpdate(req.params.id, { $push: {projects: req.body.project }})
@@ -50,6 +54,19 @@ router.post('/create', function(req, res) {
   })
 })
   
+router.post('/verify', function(req, res) {
+  console.log('running')
+  let token = req.body.token;
+  client.verifyIdToken({
+    idToken: token,
+    audience: CLIENT_ID
+  }).verify().catch(console.error);
+  const payload = ticket.getPayload();
+  console.log(ticket.fname)
+  const userid = payload['sub'];
+  
+})
+
 router.get('/login', function(req, res) {
   let username = req.query.username;
   let password = req.query.password;

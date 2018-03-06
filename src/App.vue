@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <toolbar></toolbar>
     <router-view></router-view>
   </div>

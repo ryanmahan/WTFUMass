@@ -124,6 +124,7 @@ export default {
 
       this.$googleAuth().signIn(function (googleUser) { 
         // things to do when sign-in succeeds
+        console.log('success')
         var id = googleUser.getAuthResponse().id_token
         axios.post('/user/verify', {
           token: id
@@ -132,6 +133,7 @@ export default {
           console.log(res.data)
         })
       }, function (error) {
+        console.log(error)
         // things to do when sign-in fails
       })
     }

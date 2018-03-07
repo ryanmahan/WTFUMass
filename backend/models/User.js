@@ -2,11 +2,10 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var User = new mongoose.Schema({
+    sub: Number,
     isAdmin: Boolean,
-    username: String,
     fname: String,
-    lname: String,
-    password: String,
+    email: String,
     projects: [{ type: Schema.Types.ObjectId, ref: 'Project' }]
 })
 

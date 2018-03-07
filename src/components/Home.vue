@@ -166,7 +166,7 @@ export default {
   created: function() {
     let self = this
     let currentUser = this.logged()
-    this.isAdmin = currentUser.isAdmin
+    this.isAdmin = currentUser.isAdmin //NOT SECURE
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data

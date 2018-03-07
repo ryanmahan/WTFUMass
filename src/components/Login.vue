@@ -120,12 +120,13 @@ export default {
       })
     },
     googleLogin () {
+      let self = this
       this.$googleAuth().directAccess()
 
       this.$googleAuth().signIn(function (googleUser) { 
         // things to do when sign-in succeeds
         console.log('success')
-        let self = this
+
         var id = googleUser.getAuthResponse().id_token
         axios.post('/user/verify', {
           token: id

@@ -57,6 +57,7 @@ router.post('/create', function(req, res) {
 router.post('/verify', function(req, res) {
   console.log('running')
   let token = req.body.token;
+  console.log(token)
   client.verifyIdToken({
     idToken: token,
     audience: CLIENT_ID

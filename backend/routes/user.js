@@ -82,6 +82,7 @@ router.post('/verify', function(req, res) {
         fname: payload['given_name'],
         email: payload['email']
       }, function (err, doc) {
+        console.log(doc)
         res.json({success: true, doc: {
           fname: doc.fname,
           _id: doc._id

@@ -53,9 +53,9 @@ router.put('/project/:id', function(req, res) {
 //     }
 //   })
 // })
-
-function verify(token) {
-  const ticket = client.verifyIdToken({
+  
+async function verify(token) {
+  const ticket = await client.verifyIdToken({
       idToken: token,
       audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
       // Or, if multiple clients access the backend:
@@ -69,34 +69,32 @@ router.post('/verify', function(req, res) {
   const client = new OAuth2Client(CLIENT_ID);
   console.log('running verify')
   let payload = verify(req.body.token)
-  .then(function () {
-    const userid = payload['sub'];
-    console.log(payload)
   
-    User.findOne({'sub': payload['sub']} , function (err, doc) {
-      console.log(doc)
-      console.log(err)
-      if (doc === null) { //None found with sub ID
-        User.create({
-          sub: payload['sub'],
-          isAdmin: false,
-          fname: payload['given_name'],
-          email: payload['email']
-        }, function (err, doc) {
-          res.json({success: true, doc: {
-            fname: doc.fname,
-            _id: doc._id
-          }})
-        })
-      } else { //One found with sub
+  const userid = payload['sub'];
+  console.log(payload)
+
+  User.findOne({'sub': payload['sub']} , function (err, doc) {
+    console.log(doc)
+    console.log(err)
+    if (doc === null) { //None found with sub ID
+      User.create({
+        sub: payload['sub'],
+        isAdmin: false,
+        fname: payload['given_name'],
+        email: payload['email']
+      }, function (err, doc) {
         res.json({success: true, doc: {
           fname: doc.fname,
           _id: doc._id
         }})
-      }
-    })
+      })
+    } else { //One found with sub
+      res.json({success: true, doc: {
+        fname: doc.fname,
+        _id: doc._id
+      }})
+    }
   })
-
 })
 
 // router.get('/login', function(req, res) {

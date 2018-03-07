@@ -128,6 +128,9 @@ export default {
         axios.post('/user/verify', {
           token: id
         })
+        .then(function (res) {
+          console.log(res.data)
+        })
       }, function (error) {
         // things to do when sign-in fails
       })

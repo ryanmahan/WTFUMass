@@ -62,7 +62,8 @@ router.post('/verify', function(req, res) {
     audience: CLIENT_ID
   }).verify().catch(console.error);
   const payload = ticket.getPayload();
-  console.log(ticket.fname)
+  console.log(payload)
+  res.json(payload)
   const userid = payload['sub'];
   
 })

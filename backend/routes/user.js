@@ -58,6 +58,7 @@ router.post('/verify', function(req, res) {
   const {OAuth2Client} = require('google-auth-library');
   const client = new OAuth2Client(CLIENT_ID);
   async function verify() {
+    let token = req.body.token
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend

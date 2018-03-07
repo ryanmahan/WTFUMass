@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var bcrypt = require('bcrypt')
 var User = require('../models/User.js');
 
 const {OAuth2Client} = require('google-auth-library');

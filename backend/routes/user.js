@@ -57,6 +57,7 @@ router.post('/create', function(req, res) {
 router.post('/verify', function(req, res) {
   const {OAuth2Client} = require('google-auth-library');
   const client = new OAuth2Client(CLIENT_ID);
+  console.log('running verify')
   async function verify() {
     let token = req.body.token
     const ticket = await client.verifyIdToken({
@@ -67,6 +68,8 @@ router.post('/verify', function(req, res) {
   });
   const payload = ticket.getPayload();
   const userid = payload['sub'];
+  console.log(payload)
+
   // If request specified a G Suite domain:
   //const domain = payload['hd'];
 }

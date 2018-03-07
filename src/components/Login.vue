@@ -130,6 +130,7 @@ export default {
           token: id
         })
         .then(function (res) {
+          console.log(googleUser)
           console.log(res.data)
         })
       }, function (error) {

@@ -120,7 +120,6 @@ export default {
       })
     },
     googleLogin () {
-      // Just add in this line
       this.$googleAuth().directAccess()
 
       this.$googleAuth().signIn(function (googleUser) { 
@@ -131,8 +130,6 @@ export default {
           token: id
         })
         .then(function (res) {
-          console.log(googleUser)
-          console.log(res.data)
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
           self.$bus.$emit('user', res.data.doc.fname)

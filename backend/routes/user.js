@@ -85,10 +85,6 @@ router.post('/verify', function(req, res) {
           _id: doc._id
         }})
       })
-      res.json({success: true, doc: {
-        fname: doc.fname,
-        _id: doc._id
-      }})
     } else { //One found with sub
       res.json({success: true, doc: {
         fname: doc.fname,

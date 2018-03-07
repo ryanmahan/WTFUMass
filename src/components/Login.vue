@@ -133,6 +133,15 @@ export default {
         .then(function (res) {
           console.log(googleUser)
           console.log(res.data)
+          if (res.data.success) {
+          self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
+          self.$bus.$emit('user', res.data.doc.fname)
+          self.$router.push({
+            name: 'Home'
+          })
+        } else {
+          self.error = true
+        }
         })
       }, function (error) {
         console.log(error)

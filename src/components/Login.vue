@@ -131,6 +131,8 @@ export default {
         axios.post('/user/verify', {
           token: id
         })
+
+
         .then(function (res) {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")

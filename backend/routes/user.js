@@ -54,9 +54,7 @@ router.put('/project/:id', function(req, res) {
 // })
 
 router.post('/verify', function(req, res) {
-  const {OAuth2Client} = require('google-auth-library');
-  const client = new OAuth2Client(CLIENT_ID);
-  console.log('running verify')
+  console.log('running verify   ' + req.body.token)
   async function verify() {
     token = req.body.token
     const ticket = await client.verifyIdToken({

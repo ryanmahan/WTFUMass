@@ -137,6 +137,7 @@ export default {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
           self.$bus.$emit('user', res.data.doc.fname)
+          console.log('sending request')
           self.$router.push({
             name: 'Home'
           })

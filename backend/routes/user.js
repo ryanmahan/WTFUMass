@@ -55,6 +55,7 @@ router.put('/project/:id', function(req, res) {
 
 router.post('/verify', function(req, res) {
   console.log('running verify   ' + req.body.token)
+  
   async function verify() {
     token = req.body.token
     const ticket = await client.verifyIdToken({

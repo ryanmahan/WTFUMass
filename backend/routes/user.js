@@ -52,8 +52,6 @@ router.put('/project/:id', function(req, res) {
 //     }
 //   })
 // })
-  
-
 
 router.post('/verify', function(req, res) {
   const {OAuth2Client} = require('google-auth-library');
@@ -66,9 +64,10 @@ router.post('/verify', function(req, res) {
         audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
         // Or, if multiple clients access the backend:
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
-  });
-  const payload = ticket.getPayload();
+    });
+    const payload = ticket.getPayload();
   }
+  console.log(payload)
   User.findOne({'sub': payload['sub']} , function (err, doc) {
     console.log(doc)
     console.log(err)

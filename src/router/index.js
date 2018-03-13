@@ -13,9 +13,6 @@ import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 
 Vue.use(Router)
- 
-Vue.use(GoogleAuth, { clientId: '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com' })
-Vue.googleAuth().load()
 
 Vue.use(vuetify, {
   theme: {

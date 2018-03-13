@@ -52,15 +52,12 @@ router.put('/project/:id', function(req, res) {
 //     }
 //   })
 // })
-  
-
 
 router.post('/verify', function(req, res) {
-  const {OAuth2Client} = require('google-auth-library');
-  const client = new OAuth2Client(CLIENT_ID);
-  let token = req.body.token
-  console.log('verify')
+  console.log('running verify   ' + req.body.token)
   async function verify() {
+    token = req.body.token
+    console.log('before client.verifyId')
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
@@ -71,33 +68,35 @@ router.post('/verify', function(req, res) {
     const userid = payload['sub'];
     // If request specified a G Suite domain:
     //const domain = payload['hd'];
-  }
-  verify().catch(console.error);
-  console.log(payload)
-
-  User.findOne({'sub': payload['sub']} , function (err, doc) {
-    console.log(doc)
-    console.log(err)
-    if (doc === null) { //None found with sub ID
-      User.create({
-        sub: payload['sub'],
-        isAdmin: false,
-        fname: payload['given_name'],
-        email: payload['email']
-      }, function (err, doc) {
-        console.log(doc)
+    console.log(payload)
+    User.findOne({'sub': payload['sub']} , function (err, doc) {
+      console.log(doc)
+      console.log(err)
+      if (doc === null) { //None found with sub ID
+        User.create({
+          sub: payload['sub'],
+          isAdmin: false,
+          fname: payload['given_name'],
+          email: payload['email']
+        }, function (err, doc) {
+          console.log(doc)
+          res.json({success: true, doc: {
+            fname: doc.fname,
+            _id: doc._id
+          }})
+        })
+      } else { //One found with sub
         res.json({success: true, doc: {
           fname: doc.fname,
           _id: doc._id
         }})
-      })
-    } else { //One found with sub
-      res.json({success: true, doc: {
-        fname: doc.fname,
-        _id: doc._id
-      }})
-    }
-  })
+      }
+    })
+  }
+  verify().catch(console.error('login error, 500 error? who knows'));
+
+
+
 })
 
 // router.get('/login', function(req, res) {

@@ -128,13 +128,17 @@ export default {
         console.log('success')
 
         var id = googleUser.getAuthResponse().id_token
+        console.log('sending request')
         axios.post('/user/verify', {
           token: id
         })
+
+
         .then(function (res) {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
           self.$bus.$emit('user', res.data.doc.fname)
+          
           self.$router.push({
             name: 'Home'
           })

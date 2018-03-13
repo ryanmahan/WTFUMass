@@ -58,7 +58,6 @@ router.post('/verify', function(req, res) {
   const client = new OAuth2Client(CLIENT_ID);
   console.log('running verify')
   async function verify() {
-    let token = req.body.token
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
@@ -66,7 +65,11 @@ router.post('/verify', function(req, res) {
         //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
     });
     const payload = ticket.getPayload();
+    const userid = payload['sub'];
+    // If request specified a G Suite domain:
+    //const domain = payload['hd'];
   }
+  verify().catch(console.error);
   console.log(payload)
   User.findOne({'sub': payload['sub']} , function (err, doc) {
     console.log(doc)

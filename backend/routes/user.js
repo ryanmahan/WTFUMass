@@ -58,6 +58,7 @@ router.post('/verify', function(req, res) {
   const client = new OAuth2Client(CLIENT_ID);
   console.log('running verify')
   async function verify() {
+    token = req.body.token
     const ticket = await client.verifyIdToken({
         idToken: token,
         audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend

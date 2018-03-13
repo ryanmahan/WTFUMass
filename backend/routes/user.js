@@ -68,7 +68,8 @@ router.post('/verify', function(req, res) {
     // If request specified a G Suite domain:
     //const domain = payload['hd'];
   }
-  verify().catch(console.error);
+  verify().catch(console.error('login error, 500 error? who knows'));
+
   console.log(payload)
   User.findOne({'sub': payload['sub']} , function (err, doc) {
     console.log(doc)

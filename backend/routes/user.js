@@ -7,11 +7,12 @@ const {OAuth2Client} = require('google-auth-library');
 CLIENT_ID = '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com'
 const client = new OAuth2Client(CLIENT_ID);
 
-
+// Add project to user's submitted projects
 router.put('/project/:id', function(req, res) {
   User.findByIdAndUpdate(req.params.id, { $push: {projects: req.body.project }})
 })
 
+// DEPRECATED. GOOGLE SIGN-ON ONLY NOW
 // router.post('/create', function(req, res) {
 //   let status = true
 //   User.findOne({username: req.body.username}, function (err, doc) {
@@ -53,22 +54,18 @@ router.put('/project/:id', function(req, res) {
 //   })
 // })
 
+// Verify token passed by google log in function.
 router.post('/verify', function(req, res) {
-  console.log('running verify   ' + req.body.token)
+  // Pass token and client ID to google to confirm
   async function verify() {
     token = req.body.token
-    console.log('before client.verifyId')
     const ticket = await client.verifyIdToken({
         idToken: token,
-        audience: CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
-        // Or, if multiple clients access the backend:
-        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        audience: CLIENT_ID,  
     });
     const payload = ticket.getPayload();
-    const userid = payload['sub'];
-    // If request specified a G Suite domain:
-    //const domain = payload['hd'];
-    console.log(payload)
+
+    // Find existing user with specific sub passed from google
     User.findOne({'sub': payload['sub']} , function (err, doc) {
       console.log(doc)
       console.log(err)
@@ -93,12 +90,10 @@ router.post('/verify', function(req, res) {
       }
     })
   }
-  verify().catch(console.error('login error, 500 error? who knows'));
-
-
-
+  verify().catch(console.error());
 })
 
+// DEPRECATED. GOOGLE SIGN-ON ONLY NOW
 // router.get('/login', function(req, res) {
 //   let username = req.query.username;
 //   let password = req.query.password;

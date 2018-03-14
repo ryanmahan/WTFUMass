@@ -1,7 +1,8 @@
 <template>
   <main id="home">
     <v-app id="cardslist">
-      <tutorial :show='firstLogin'></tutorial>
+      <tutorial :show='message'></tutorial>
+      <login v-if='showLogin === true' :action='action'></login>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
@@ -103,12 +104,14 @@ body {
 import axios from 'axios'
 import Tutorial from './Tutorial'
 import AdminTools from './AdminTools'
+import Login from './Login'
 
 export default {
   name: 'Admin',
   components: {
     Tutorial,
-    AdminTools
+    AdminTools,
+    Login
   },
   data () {
     return {
@@ -116,6 +119,7 @@ export default {
       isAdmin: false,
       message: '',
       snackbar: false,
+      showLogin: false,
       firstLogin: false,
     }
   },
@@ -125,9 +129,8 @@ export default {
       let currentUser = this.logged()
       if(!currentUser) {
         console.log("Clicked!")
-        this.message = 'You must be logged in to vote'
-        this.snackbar = true
-        
+        this.action = 'You must be logged in to vote'
+        this.showLogin = true
         return
       }
       axios.put('/project/votes/' + proj._id, {

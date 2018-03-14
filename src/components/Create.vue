@@ -1,6 +1,7 @@
 <template>
   <div class='create'>
     <v-app id='app'>
+      <login v-if='showLogin' :action='action'></login>
       <v-flex xs12 align-center id='flex'>
         <v-card id="card">
           <span id='header' class='headline mb-0 left'>What to fix?</span>
@@ -48,18 +49,24 @@
 <script>
 import axios from 'axios'
 import Filter from 'bad-words'
+import Login from './Login'
 
 var filter = new Filter();
 filter.removeWords('umass')
 
 export default {
   name: 'Create',
+  components: {
+    Login,
+  },
   data () {
     return {
       title: '',
       description: '',
       message: '',
-      snackbar: false
+      snackbar: false,
+      action: '',
+      showLogin: false,
     }
   },
   methods: {
@@ -67,8 +74,8 @@ export default {
       let self = this
       let currUser = this.logged()
       if (!currUser) {
-        this.message = 'You must be logged in to submit a project'
-        this.snackbar = true
+        this.action = 'submit a project'
+        this.showLogin = true
         return
       }
       if (!this.checkSubmission(this.title, 30)) {return}

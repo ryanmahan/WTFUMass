@@ -2,7 +2,7 @@ var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
 var User = new mongoose.Schema({
-    sub: Number,
+    sub: String,
     isAdmin: Boolean,
     fname: String,
     email: String,

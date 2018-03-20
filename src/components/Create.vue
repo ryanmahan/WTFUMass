@@ -29,6 +29,14 @@
         <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
         <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
       </v-snackbar>
+      <v-bottom-sheet v-model='showLogin'>
+        <v-card>
+          <br>
+          <span class='title'>You must log in to submit a project</span>
+          <login/>
+          <br>
+        </v-card>
+      </v-bottom-sheet>
     </v-app>
   </div>
 </template>
@@ -48,18 +56,23 @@
 <script>
 import axios from 'axios'
 import Filter from 'bad-words'
+import Login from './Login'
 
 var filter = new Filter();
 filter.removeWords('umass')
 
 export default {
   name: 'Create',
+  components: {
+    Login,
+  },
   data () {
     return {
       title: '',
       description: '',
       message: '',
-      snackbar: false
+      snackbar: false,
+      showLogin: false,
     }
   },
   methods: {
@@ -67,8 +80,7 @@ export default {
       let self = this
       let currUser = this.logged()
       if (!currUser) {
-        this.message = 'You must be logged in to submit a project'
-        this.snackbar = true
+        this.showLogin = true
         return
       }
       if (!this.checkSubmission(this.title, 30)) {return}

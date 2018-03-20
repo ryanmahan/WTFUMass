@@ -2,7 +2,7 @@
   <main id="home">
     <v-app id="cardslist">
       <tutorial :show='message'></tutorial>
-      <login v-if='showLogin === true' :action='action'></login>
+      <login v-if='showLogin === true' :buttonOnly='false' :action='action'></login>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
@@ -38,6 +38,8 @@
               </v-card>
           </v-flex>
         </v-layout>
+        <span class='headline text-xs-center' > Dont see an idea you have? </span>
+        <span class='headline'> <router-link to='Create'> Submit a fix here! </router-link> </span>
       <v-snackbar top  v-model="snackbar">{{ message }}
         <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
         <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>

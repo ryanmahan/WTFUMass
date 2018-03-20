@@ -13,6 +13,9 @@
           <v-stepper-items>
             <v-stepper-content step="1">
               <v-card class="mb-5">
+                <h2>
+                  Welcome to WTFUMass! (What to Fix)
+                </h2>
                 <p>
                   Vote for a fix using the 'Vote for this' button! The tag and progress bar at the top will show the SGA's progress on a project.
                 </p>
@@ -71,6 +74,9 @@
             </v-stepper-content>
             <v-stepper-content step="3">
                 <v-card>
+                <span class='title'> Get started by signing in with Google</span>
+                <login :buttonOnly='true'></login>
+                <br> <br>
                 <span class='title'> Thanks for using WTFUMass! </span>
                 <br>
                 <span class='body-2'> Do you want to get more involved with the fixes on this site? Join the Student Government Association! Email
@@ -78,6 +84,7 @@
                 <br>
                 <span class='caption'> Created by Ryan Mahan <br> <a href='https://github.com/ryanmahan/wtfumass'> View me on GitHub </a> </span>
               </v-card>
+              <br>
               <v-btn outline color='primary' @click="visible = false" >Continue</v-btn>
               <v-btn outline @click='visible=false'>Close</v-btn>
             </v-stepper-content>
@@ -88,19 +95,33 @@
   </div>
 </template>
 
+<style>
+#login {
+  justify-content: center;
+  background-color: white;
+}
+</style>
+
+
 <script>
+import Login from './Login'
+
 export default {
+  components: {
+    Login,
+  },
   props: [
     'show'
   ],
   data () {
     return {
       e1: 0,
-      visible: false
+      visible: true
     }
   },
   created: function () {
     this.visible = this.$props.show
+    this.visible = true
   }
 }
 </script>

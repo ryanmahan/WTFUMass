@@ -1,24 +1,34 @@
 <template>
   <v-app id='login'>
     <meta name="google-site-verification" content="lCO-Y0_siXEtcD9_fIxqGufrGE9KjGi6wK1Siq6W4Rk" />
-    <div id='beforeSheet' class="text-xs-center">
+    <div id='beforeSheet' class="text-xs-center" v-if='buttonOnly === false'>
       <v-dialog max-width="50%" v-model='sheet'>
         <v-card>
           <span class='title'> Log in to {{action}} </span>
           <hr>
-          <img @click='googleLogin()' src='../assets/btn_google_signin_dark_normal_web.png'/>
+          <img id='button' @click='googleLogin()' src='../assets/btn_google_signin_dark_normal_web.png'/>
         </v-card>
       </v-dialog>
     </div>
+    <v-card flat>
+      <img id='button' v-if='buttonOnly === true' @click='googleLogin()' src='../assets/btn_google_signin_dark_normal_web.png'/>
+    </v-card>
   </v-app>
 </template>
+
+<style>
+#button {
+ width: 191px;
+ height: 46px;
+}
+</style>
 
 <script>
 import axios from 'axios'
 
 export default {
   name: 'Login',
-  props: ['action'],
+  props: ['action', 'buttonOnly'],
   data () {
     return {
       sheet: true,

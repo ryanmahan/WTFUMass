@@ -60,6 +60,12 @@ export default new Router({
       component: PrivacyPolicy,
       name: 'Privacy',
       path: '/privacy'
+    },
+    //TEST PATHS BELOW
+    {
+      component: Tutorial,
+      name: 'Tutorial',
+      path: '/tutorial'
     }
   ]
 })

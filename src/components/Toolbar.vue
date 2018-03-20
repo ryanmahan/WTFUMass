@@ -11,9 +11,8 @@
         <v-icon>more_vert</v-icon>
       </v-btn>
       <v-list offset-y>
-        <v-list-tile @click='pushCreate' flat>Submit a fix</v-list-tile>
         <v-list-tile @click='pushHome' flat>Vote on fixes</v-list-tile>
-        <v-list-tile v-if='!loggedIn' @click='pushLogin' flat>{{name}}</v-list-tile>
+        <v-list-tile @click='pushCreate' flat>Submit a fix</v-list-tile>
         <div v-if='loggedIn'>
             <v-list-tile @click='logout()'>
               <v-list-tile-title>Log Out</v-list-tile-title>
@@ -33,7 +32,6 @@
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
-      <v-btn v-if='!loggedIn' @click='pushLogin' flat>{{name}}</v-btn>
       <v-menu v-if='loggedIn' offset-y close-on-click close-on-content-click open-on-hover>
         <v-btn flat slot='activator'>{{name}}</v-btn>
         <v-list offset-y>

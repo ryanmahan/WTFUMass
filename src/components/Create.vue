@@ -1,7 +1,6 @@
 <template>
   <div class='create'>
     <v-app id='app'>
-      <login v-if='showLogin' :action='action'></login>
       <v-flex xs12 align-center id='flex'>
         <v-card id="card">
           <span id='header' class='headline mb-0 left'>What to fix?</span>
@@ -30,6 +29,14 @@
         <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
         <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
       </v-snackbar>
+      <v-bottom-sheet v-model='showLogin'>
+        <v-card>
+          <br>
+          <span class='title'>You must log in to submit a project</span>
+          <login/>
+          <br>
+        </v-card>
+      </v-bottom-sheet>
     </v-app>
   </div>
 </template>
@@ -65,7 +72,6 @@ export default {
       description: '',
       message: '',
       snackbar: false,
-      action: '',
       showLogin: false,
     }
   },
@@ -74,7 +80,6 @@ export default {
       let self = this
       let currUser = this.logged()
       if (!currUser) {
-        this.action = 'submit a project'
         this.showLogin = true
         return
       }

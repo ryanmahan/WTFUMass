@@ -17,7 +17,7 @@
                   Welcome to WTFUMass! (What to Fix)
                 </h2>
                 <p>
-                  Vote for a fix using the 'Vote for this' button! The tag and progress bar at the top will show the SGA's progress on a project.
+                  You can vote for a fix using the 'Vote for this' button! The tag and progress bar at the top will show the SGA's progress on a project.
                 </p>
                 <v-card class="my-2" id='card'>
                   <v-progress-linear class='my-0' v-bind:value='35' height="4" color='red darken-4'></v-progress-linear>
@@ -75,7 +75,7 @@
             <v-stepper-content step="3">
                 <v-card>
                 <span class='title'> Get started by signing in with Google</span>
-                <login :buttonOnly='true'></login>
+                <login></login>
                 <br> <br>
                 <span class='title'> Thanks for using WTFUMass! </span>
                 <br>
@@ -121,7 +121,6 @@ export default {
   },
   created: function () {
     this.visible = this.$props.show
-    this.visible = true
   }
 }
 </script>

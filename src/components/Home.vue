@@ -1,8 +1,15 @@
 <template>
   <main id="home">
     <v-app id="cardslist">
-      <tutorial :show='message'></tutorial>
-      <login v-if='showLogin === true' :buttonOnly='false' :action='action'></login>
+      <tutorial :show='firstLogin'></tutorial>
+      <v-bottom-sheet v-model='showLogin'>
+        <v-card>
+          <br>
+          <span class='title'>You must log in to vote</span>
+          <login/>
+          <br>
+        </v-card>
+      </v-bottom-sheet>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
@@ -131,7 +138,6 @@ export default {
       let currentUser = this.logged()
       if(!currentUser) {
         console.log("Clicked!")
-        this.action = 'You must be logged in to vote'
         this.showLogin = true
         return
       }

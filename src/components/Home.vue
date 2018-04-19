@@ -178,7 +178,8 @@ export default {
     let currentUser = this.logged()
     axios.get('/user/admin/' + currentUser._id)
     .then(function (res) {
-      self.isAdmin = res.data.admin
+      console.log(res.data.isAdmin)
+      self.isAdmin = res.data.isAdmin
     })
     axios.get('/project/')
     .then(function (res) {

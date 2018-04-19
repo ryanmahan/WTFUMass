@@ -130,13 +130,13 @@ export default {
       snackbar: false,
       showLogin: false,
       firstLogin: false,
-      loggedIn: false
     }
   },
   methods: {
     voteUp: function (proj) {
       let self = this
-      if(!this.loggedIn) {
+      let currentUser = this.logged()
+      if(!currentUser) {
         this.showLogin = true
         return
       }
@@ -175,14 +175,18 @@ export default {
   },
   created: function() {
     let self = this
+    let currentUser = this.logged()
+    axios.get('/user/admin/' + currentUser._id)
+    .then(function (res) {
+      self.isAdmin = res.data.admin
+    })
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
       self.projects.forEach(function (proj) {
-        if(!self.loggedIn) {
-          proj.voted = false
-        } else {
-          proj.voted = proj.votedBy.includes(currentUser._id)
+        proj.voted = proj.votedBy.includes(currentUser._id)
+        if (currentUser === null) {
+          proj.voted = true
         }
         if (proj.tag === 'Project Done!') {
           proj.bar = 100
@@ -205,13 +209,5 @@ export default {
     //   }
     // }
   },
-  mounted: function() {
-      this.$bus.$on('user', function (arg) {
-      this.admin = arg.isAdmin
-      this.currentUser = arg
-      this.showLogin = false
-      this.loggedIn = true
-    }.bind(this))
-  }
 }
 </script>

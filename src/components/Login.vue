@@ -53,6 +53,7 @@ export default {
         // things to do when sign-in succeeds
 
         var id = googleUser.getAuthResponse().id_token
+
         axios.post('/user/verify', {
           token: id
         })
@@ -60,7 +61,9 @@ export default {
 
         .then(function (res) {
           if (res.data.success) {
-          self.$bus.$emit('user', res.data.doc)
+          self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
+          self.$bus.$emit('name', res.data.doc)
+          
           self.$router.push({
             name: 'Home'
           })
@@ -70,7 +73,6 @@ export default {
         })
       }, function (error) {
         console.log(error)
-
         // things to do when sign-in fails
       })
     }

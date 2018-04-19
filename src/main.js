@@ -10,6 +10,7 @@ let mixin = Vue.mixin({
   methods: {
     logged: function () {
     let user = this.$cookie.get('user')
+    console.log(user)
     if(user === null){
       return false
     } else {

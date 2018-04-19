@@ -14,7 +14,10 @@ router.put('/project/:id', function(req, res) {
 
 //Test for is admin
 router.get('/admin/:id', function (req, res) {
+  if (req.params.id === undefined) 
+    res.json({admin: false})
   User.findById(req.params.id, function (err, doc) {
+    
     if(doc.isAdmin) {
       res.json({admin: true})
     } else {

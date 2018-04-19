@@ -119,7 +119,7 @@ export default {
   },
   mounted: function () {
     this.$bus.$on('user', function (arg) {
-      this.name = arg
+      this.name = arg.fname
       this.loggedIn = true
     }.bind(this))
   }

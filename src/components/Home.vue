@@ -116,7 +116,7 @@ import AdminTools from './AdminTools'
 import Login from './Login'
 
 export default {
-  name: 'Admin',
+  name: 'Home',
   components: {
     Tutorial,
     AdminTools,
@@ -177,7 +177,6 @@ export default {
   created: function() {
     let self = this
     let currentUser = this.logged()
-    this.isAdmin = currentUser.isAdmin
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
@@ -208,5 +207,13 @@ export default {
     //   }
     // }
   },
+  mounted: function() {
+      this.$bus.$on('user', function (arg) {
+      this.admin = arg.isAdmin
+      this.currentUser = arg
+      this.showLogin = false
+      this.loggedIn = true
+    }.bind(this))
+  }
 }
 </script>

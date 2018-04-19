@@ -12,6 +12,17 @@ router.put('/project/:id', function(req, res) {
   User.findByIdAndUpdate(req.params.id, { $push: {projects: req.body.project }})
 })
 
+//Test for is admin
+router.get('/admin/:id'), function (req, res) {
+  User.findById(req.params.id, function (err, doc) {
+    if(doc.isAdmin) {
+      res.json({admin: true})
+    } else {
+      res.json({admin: false})
+    }
+  })
+}
+
 // DEPRECATED. GOOGLE SIGN-ON ONLY NOW
 // router.post('/create', function(req, res) {
 //   let status = true

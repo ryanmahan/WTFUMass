@@ -46,16 +46,16 @@ export default new Router({
       name: 'About',
       path: '/about'
     },
-    {
-      component: Login,
-      name: 'Login',
-      path: '/login'
-    },
-    {
-      component: SignUp,
-      name: 'SignUp',
-      path: '/signup'
-    },
+    // {
+    //   component: Login,
+    //   name: 'Login',
+    //   path: '/login'
+    // },
+    // {
+    //   component: SignUp,
+    //   name: 'SignUp',
+    //   path: '/signup'
+    // },
     {
       component: PrivacyPolicy,
       name: 'Privacy',

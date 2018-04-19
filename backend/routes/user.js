@@ -13,7 +13,7 @@ router.put('/project/:id', function(req, res) {
 })
 
 //Test for is admin
-router.get('/admin/:id'), function (req, res) {
+router.get('/admin/:id', function (req, res) {
   User.findById(req.params.id, function (err, doc) {
     if(doc.isAdmin) {
       res.json({admin: true})
@@ -21,7 +21,7 @@ router.get('/admin/:id'), function (req, res) {
       res.json({admin: false})
     }
   })
-}
+})
 
 // DEPRECATED. GOOGLE SIGN-ON ONLY NOW
 // router.post('/create', function(req, res) {

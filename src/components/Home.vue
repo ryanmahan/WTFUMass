@@ -130,12 +130,13 @@ export default {
       snackbar: false,
       showLogin: false,
       firstLogin: false,
+      loggedIn: false
     }
   },
   methods: {
     voteUp: function (proj) {
       let self = this
-      if(!currentUser) {
+      if(!this.loggedIn) {
         this.showLogin = true
         return
       }
@@ -174,18 +175,14 @@ export default {
   },
   created: function() {
     let self = this
-    if(!currentUser) {
-      this.showLogin = true
-      return
-    }
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
-      console.log(self.projects)
       self.projects.forEach(function (proj) {
-        proj.voted = proj.votedBy.includes(currentUser._id)
-        if (currentUser === null) {
-          proj.voted = true
+        if(!self.loggedIn) {
+          proj.voted = false
+        } else {
+          proj.voted = proj.votedBy.includes(currentUser._id)
         }
         if (proj.tag === 'Project Done!') {
           proj.bar = 100

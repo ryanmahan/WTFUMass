@@ -135,9 +135,7 @@ export default {
   methods: {
     voteUp: function (proj) {
       let self = this
-      let currentUser = this.logged()
       if(!currentUser) {
-        console.log("Clicked!")
         this.showLogin = true
         return
       }
@@ -176,7 +174,10 @@ export default {
   },
   created: function() {
     let self = this
-    let currentUser = this.logged()
+    if(!currentUser) {
+      this.showLogin = true
+      return
+    }
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data

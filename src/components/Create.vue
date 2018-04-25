@@ -62,6 +62,13 @@ export default {
       snackbar: false
     }
   },
+  created: function () {
+    showLogin = true
+    this.$bus.$on('user', function (arg) {
+      this.showLogin = false
+      location.reload()
+    }.bind(this))
+  },
   methods: {
     submit (evt) {
       let self = this

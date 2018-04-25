@@ -197,5 +197,11 @@ export default {
     //   }
     // }
   },
+  mounted: function () {
+    this.$bus.$on('user', function (arg) {
+      this.showLogin = false
+      location.reload()
+    }.bind(this))
+  }
 }
 </script>

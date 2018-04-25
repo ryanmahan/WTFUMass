@@ -63,10 +63,6 @@ export default {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
           self.$bus.$emit('name', res.data.doc)
-          location.reload()
-          self.$router.push({
-            name: 'Home'
-          })
         } else {
           self.error = true
         }

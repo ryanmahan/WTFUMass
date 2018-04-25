@@ -51,10 +51,9 @@ export default {
 
       this.$googleAuth().signIn(function (googleUser) { 
         // things to do when sign-in succeeds
-        console.log('success')
 
         var id = googleUser.getAuthResponse().id_token
-        console.log('sending request')
+
         axios.post('/user/verify', {
           token: id
         })
@@ -63,8 +62,8 @@ export default {
         .then(function (res) {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
-          self.$bus.$emit('user', res.data.doc.fname)
-          
+          self.$bus.$emit('name', res.data.doc)
+          location.reload()
           self.$router.push({
             name: 'Home'
           })

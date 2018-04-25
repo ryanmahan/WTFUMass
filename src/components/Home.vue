@@ -116,7 +116,7 @@ import AdminTools from './AdminTools'
 import Login from './Login'
 
 export default {
-  name: 'Admin',
+  name: 'Home',
   components: {
     Tutorial,
     AdminTools,
@@ -137,7 +137,6 @@ export default {
       let self = this
       let currentUser = this.logged()
       if(!currentUser) {
-        console.log("Clicked!")
         this.showLogin = true
         return
       }
@@ -177,11 +176,14 @@ export default {
   created: function() {
     let self = this
     let currentUser = this.logged()
-    this.isAdmin = currentUser.isAdmin
+    axios.get('/user/admin/' + currentUser._id)
+    .then(function (res) {
+      console.log(res.data.admin)
+      self.isAdmin = res.data.admin
+    })
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
-      console.log(self.projects)
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)
         if (currentUser === null) {

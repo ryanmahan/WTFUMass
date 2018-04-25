@@ -2,6 +2,14 @@
   <main id="home">
     <v-app id="cardslist">
       <tutorial :show='firstLogin'></tutorial>
+      <v-bottom-sheet v-model='showLogin'>
+        <v-card>
+          <br>
+          <span class='title'>You must log in to vote</span>
+          <login/>
+          <br>
+        </v-card>
+      </v-bottom-sheet>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
@@ -37,6 +45,8 @@
               </v-card>
           </v-flex>
         </v-layout>
+        <span class='headline text-xs-center' > Dont see an idea you have? </span>
+        <span class='headline'> <router-link to='Create'> Submit a fix here! </router-link> </span>
       <v-snackbar top  v-model="snackbar">{{ message }}
         <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
         <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
@@ -103,12 +113,14 @@ body {
 import axios from 'axios'
 import Tutorial from './Tutorial'
 import AdminTools from './AdminTools'
+import Login from './Login'
 
 export default {
-  name: 'Admin',
+  name: 'Home',
   components: {
     Tutorial,
-    AdminTools
+    AdminTools,
+    Login
   },
   data () {
     return {
@@ -116,6 +128,7 @@ export default {
       isAdmin: false,
       message: '',
       snackbar: false,
+      showLogin: false,
       firstLogin: false,
     }
   },
@@ -124,10 +137,7 @@ export default {
       let self = this
       let currentUser = this.logged()
       if(!currentUser) {
-        console.log("Clicked!")
-        this.message = 'You must be logged in to vote'
-        this.snackbar = true
-        
+        this.showLogin = true
         return
       }
       axios.put('/project/votes/' + proj._id, {
@@ -166,11 +176,14 @@ export default {
   created: function() {
     let self = this
     let currentUser = this.logged()
-    this.isAdmin = currentUser.isAdmin
+    axios.get('/user/admin/' + currentUser._id)
+    .then(function (res) {
+      console.log(res.data.admin)
+      self.isAdmin = res.data.admin
+    })
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
-      console.log(self.projects)
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)
         if (currentUser === null) {

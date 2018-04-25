@@ -25,10 +25,6 @@
           </v-form>
         </v-card>
       </v-flex>
-      <v-snackbar top  v-model="snackbar">{{ message }}
-        <v-btn v-if='message.includes("log")' class='mx-1' flat color='blue lighten-2' @click='pushLogin()'> Login </v-btn>
-        <v-btn class='mx-1' flat color='blue lighten-2' @click='snackbar = false'>Close</v-btn>
-      </v-snackbar>
       <v-bottom-sheet v-model='showLogin'>
         <v-card>
           <br>
@@ -72,14 +68,12 @@ export default {
       description: '',
       message: '',
       snackbar: false,
-      showLogin: false,
+      showLogin: true,
     }
   },
   created: function () {
-    showLogin = true
     this.$bus.$on('user', function (arg) {
       this.showLogin = false
-      location.reload()
     }.bind(this))
   },
   methods: {

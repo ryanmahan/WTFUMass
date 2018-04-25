@@ -68,10 +68,14 @@ export default {
       description: '',
       message: '',
       snackbar: false,
-      showLogin: true,
+      showLogin: false,
     }
   },
   created: function () {
+    let currUser = this.logged()
+    if (!currUser) {
+      this.showLogin = true
+    }
     this.$bus.$on('user', function (arg) {
       this.showLogin = false
     }.bind(this))

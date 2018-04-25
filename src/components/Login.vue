@@ -62,7 +62,7 @@ export default {
         .then(function (res) {
           if (res.data.success) {
           self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
-          self.$bus.$emit('name', res.data.doc)
+          self.$bus.$emit('user', res.data.doc)
         } else {
           self.error = true
         }

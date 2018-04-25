@@ -78,6 +78,7 @@ export default {
     }
     this.$bus.$on('user', function (arg) {
       this.showLogin = false
+      location.reload()
     }.bind(this))
   },
   methods: {

@@ -105,7 +105,7 @@ export default {
       }
     },
     checkSubmission: function (check, length) {
-      if(check.length = 0){
+      if(check.length === 0){
         this.message = 'Submission empty'
         this.snackbar = true
         return false

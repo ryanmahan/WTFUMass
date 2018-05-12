@@ -95,8 +95,9 @@ router.get('/user/:id', function(req, res) {
   })
 })
 
+//Archive post
 router.put('/archive/:id', function(req, res) {
-  console.log(req.body.reply)
+  console.log(req.params.id)
   Project.findByIdAndUpdate(req.params.id, {
     $set: {archived: true},
   },

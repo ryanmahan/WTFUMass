@@ -4,6 +4,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var mongoose   = require('mongoose');
 const serveStatic = require('serve-static')
+var keys = require('./keys')
 
 
 // Routes required to access differnt endpoints - easier if used within variable as such
@@ -21,8 +22,9 @@ app.use('/project', project);
 
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://ryan:ryanp@ds229648.mlab.com:29648/wtfumass')
-  .then(() =>  console.log('connection succesful'))
+
+mongoose.connect(keys.mlab)
+  .then(() =>  console.log('mongodb connection succesful'))
   .catch((err) => console.error(err));
 
 

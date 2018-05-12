@@ -12,11 +12,15 @@ import SignUp from '../components/SignUp'
 import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 
+import keys from '../../keys.js'
+
 Vue.use(Router)
 
 import GoogleAuth from 'vue-google-auth'
 
-Vue.use(GoogleAuth, { clientId: '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com', key: 'AIzaSyBQThw3KDTFsqnDVbazZ3DcFgxzUFuZpNM' })
+console.log(keys.gsecret)
+
+Vue.use(GoogleAuth, { clientId: '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com', key: keys.gsecret })
 Vue.googleAuth().load()
 
 Vue.use(vuetify, {

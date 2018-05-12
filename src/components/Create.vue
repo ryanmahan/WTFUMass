@@ -33,6 +33,10 @@
           <br>
         </v-card>
       </v-bottom-sheet>
+      <v-snackbar v-model='snackbar' top>
+        {{ message }}
+        <v-btn flat color='white' @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     </v-app>
   </div>
 </template>

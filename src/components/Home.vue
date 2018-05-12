@@ -203,7 +203,7 @@ export default {
         }
       })
       //filter out if archived is true
-      self.projects.filter(function (item) {
+      self.projects = self.projects.filter(function (item) {
         return !item.archived
       })
     })

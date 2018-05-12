@@ -13,6 +13,7 @@ var Project = new mongoose.Schema({
     tag: String,
     reply: String,
     status: String,
+    archived: Boolean,
 })
 
 module.exports = mongoose.model('Project', Project);

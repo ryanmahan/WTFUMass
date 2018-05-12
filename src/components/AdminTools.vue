@@ -62,8 +62,9 @@ export default {
         {title: 'No tag'}
       ],
       actions: [
-        {title: 'Delete', class: 'red'},
         {title: 'Reply'},
+        {title: 'Archive'},
+        {title: 'Delete', class: 'red'},
       ],
       replyDialog: false,
       replyTo: {},
@@ -109,7 +110,9 @@ export default {
       } else if(action == 'Reply'){
         this.replyTo = this.$props.project
         this.replyDialog = true
-      } 
+      } else if(action == 'Archive'){
+        this.$props.project.archived = true
+      }
     }
   },
 }

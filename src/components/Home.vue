@@ -202,6 +202,10 @@ export default {
           proj.bar = 35
         }
       })
+      //filter out if archived is true
+      self.projects.filter(function (item) {
+        return !item.archived
+      })
     })
     if(this.$cookie.get('iwashere') === null) {
       this.$cookie.set('iwashere', new Date().toString, 60 * 60 * 24 * 30 * 12)

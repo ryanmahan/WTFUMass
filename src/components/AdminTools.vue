@@ -111,7 +111,8 @@ export default {
         this.replyTo = this.$props.project
         this.replyDialog = true
       } else if(action == 'Archive'){
-        this.$props.project.archived = true
+        axios.put('/archive/' + this.$props.project._id)
+        alert('Project Archived')
       }
     }
   },

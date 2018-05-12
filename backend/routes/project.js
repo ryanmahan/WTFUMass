@@ -31,7 +31,6 @@ router.post('/', function(req, res) {
       }
     })
   })
-  
 })
 
 // Vote on project
@@ -73,6 +72,7 @@ router.put('/tag/:id', function(req, res) {
     })
   })
 
+//SGA reply to post
 router.put('/reply/:id', function(req, res) {
   console.log(req.body.reply)
   Project.findByIdAndUpdate(req.params.id, {
@@ -84,7 +84,8 @@ router.put('/reply/:id', function(req, res) {
   })
 })
 
-router.get('/:id/user', function(req, res) {
+//Get user who made post
+router.get('/user/:id', function(req, res) {
   Project.findById(req.params.id, function (err, prj) {
     console.log(prj)
     User.findById(prj.submittedBy, function (err, usr) {
@@ -94,6 +95,18 @@ router.get('/:id/user', function(req, res) {
   })
 })
 
+router.put('/archive/:id', function(req, res) {
+  console.log(req.body.reply)
+  Project.findByIdAndUpdate(req.params.id, {
+    $set: {archived: true},
+  },
+  {new: true},
+  function (err, doc) {
+    res.json(doc)
+  })
+})
+
+//Delete post
 router.delete('/:id', function(req, res) {
   Project.findByIdAndRemove(req.params.id, function (err, doc) {
   })

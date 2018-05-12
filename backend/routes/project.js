@@ -13,23 +13,25 @@ router.get('/', function(req, res) {
 
 // Create new project
 router.post('/', function(req, res) {
-  
-  Project.create({
-    submittedBy: req.body.user,
-    email: req.body.user.email,
-    title: req.body.title,
-    description: req.body.description,
-    dateCreated: new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' }),
-    votes: 1,
-    votedBy: [req.body.user._id]
-  }, function(err, doc) {
-    console.log(doc)
-    if (err) {
-      res.send('failure');
-    } else {
-      res.json(doc);
-    }
+  User.findById(req.body.user, function(err, doc){
+    Project.create({
+      submittedBy: req.body.user,
+      email: doc.email,
+      title: req.body.title,
+      description: req.body.description,
+      dateCreated: new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' }),
+      votes: 1,
+      votedBy: [req.body.user._id]
+    }, function(err, doc) {
+      console.log(doc)
+      if (err) {
+        res.send('failure');
+      } else {
+        res.json(doc);
+      }
+    })
   })
+  
 })
 
 // Vote on project

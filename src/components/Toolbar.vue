@@ -1,9 +1,11 @@
 <template>
   <v-app>
   <v-toolbar id="bar" dark>
-    <v-toolbar-title id="title"> 
-      WTF UMass
-    </v-toolbar-title>
+    <router-link to='/'> 
+      <v-toolbar-title id="title">
+       WTF UMass
+      </v-toolbar-title>
+    </router-link>
     <v-spacer></v-spacer>
     <!-- for smaller screens -->
     <v-menu class="hidden-md-and-up" offset-y close-on-click close>
@@ -28,7 +30,7 @@
         </div>
       </v-list>
     </v-menu>
-    <!-- For larger screens -->
+    <!-- for larger screens -->
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>

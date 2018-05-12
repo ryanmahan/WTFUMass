@@ -63,11 +63,11 @@ export default {
       ],
       actions: [
         {title: 'Delete', class: 'red'},
-        {title: 'Reply'}
+        {title: 'Reply'},
       ],
       replyDialog: false,
       replyTo: {},
-      reply: ''
+      reply: '',
     }
   },
   methods: {
@@ -109,7 +109,7 @@ export default {
       } else if(action == 'Reply'){
         this.replyTo = this.$props.project
         this.replyDialog = true
-      }
+      } 
     }
   },
 }

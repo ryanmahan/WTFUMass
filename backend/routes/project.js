@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
 var Project = require('../models/Project.js');
+var User = require('../models/User.js')
 
 // Get all projects
 router.get('/', function(req, res) {
@@ -15,6 +16,7 @@ router.post('/', function(req, res) {
   
   Project.create({
     submittedBy: req.body.user,
+    email: req.body.user.email,
     title: req.body.title,
     description: req.body.description,
     dateCreated: new Date().toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'America/New_York' }),
@@ -77,6 +79,16 @@ router.put('/reply/:id', function(req, res) {
   {new: true},
   function (err, doc) {
     res.json(doc)
+  })
+})
+
+router.get('/:id/user', function(req, res) {
+  Project.findById(req.params.id, function (err, prj) {
+    console.log(prj)
+    User.findById(prj.submittedBy, function (err, usr) {
+      console.log(usr)
+      res.json(usr)
+    })
   })
 })
 

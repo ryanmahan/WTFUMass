@@ -11,7 +11,7 @@ import Login from '../components/Login'
 import SignUp from '../components/SignUp'
 import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
-
+import Archive from '../components/Archive'
 import keys from '../../keys.js'
 
 Vue.use(Router)
@@ -47,6 +47,11 @@ export default new Router({
       component: About,
       name: 'About',
       path: '/about'
+    },
+    {
+      component: Archive,
+      name: 'Archive',
+      path: '/archive'
     },
     // {
     //   component: Login,

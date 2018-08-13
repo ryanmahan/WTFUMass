@@ -43,7 +43,7 @@
                 </v-card-actions>
                 <i>
                   <span v-if='isAdmin' class='caption left my-0'>Submitted {{project.dateCreated}} by {{project.email}}</span>
-                  <span v-if='!isAdmin' class='caption left my-0'>Submitted {{project.dateCreated}}></span>
+                  <span v-if='!isAdmin' class='caption left my-0'>Submitted {{project.dateCreated}}</span>
                 </i>
               </v-card>
           </v-flex>

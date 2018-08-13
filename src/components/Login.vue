@@ -1,7 +1,7 @@
 <template>
   <v-app id='login'>
     <v-card flat>
-      <v-btn id='button' v-on:click= googleLogin() ><img id="logo" src='../assets/btn_google_light_normal_ios.svg'/> Log in with Google</v-btn>
+      <v-btn id='button' v-on:click= googleLogin() ><img id="logo" src='../assets/btn_google_dark_normal_web.png'/> Log in with Google</v-btn>
     </v-card>
   </v-app>
 </template>

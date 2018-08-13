@@ -18,7 +18,7 @@ Vue.use(Router)
 
 import GoogleAuth from 'vue-google-auth'
 
-Vue.use(GoogleAuth, { clientId: '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com', key: keys.gsecret })
+Vue.use(GoogleAuth, { clientId: '264962346921-0q0378j1o9ss7n1vkc87603bd44g8slt.apps.googleusercontent.com', key: keys.gsecret })
 Vue.googleAuth().load()
 
 Vue.use(vuetify, {

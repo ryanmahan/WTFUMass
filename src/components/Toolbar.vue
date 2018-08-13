@@ -15,15 +15,11 @@
       <v-list offset-y>
         <v-list-tile @click='pushHome' flat>Vote on fixes</v-list-tile>
         <v-list-tile @click='pushCreate' flat>Submit a fix</v-list-tile>
+        <v-list-tile @click='pushArchive' flat>Archive</v-list-tile>
         <div v-if='loggedIn'>
             <v-list-tile @click='logout()'>
               <v-list-tile-title>Log Out</v-list-tile-title>
             </v-list-tile>
-            <!--
-            <v-list-tile @click='pushSettings()'>
-              <v-list-tile-title>Settings</v-list-tile-title>
-            </v-list-tile>
-            -->
             <v-list-tile @click='pushAbout()'>
               <v-list-tile-title>About</v-list-tile-title>
             </v-list-tile>
@@ -34,17 +30,13 @@
     <v-toolbar-items class="hidden-sm-and-down">
       <v-btn @click='pushCreate' flat>Submit a fix</v-btn>
       <v-btn @click='pushHome' flat>Vote on fixes</v-btn>
+      <v-btn @click='pushArchive' flat>Archive</v-btn>
       <v-menu v-if='loggedIn' offset-y close-on-click close-on-content-click open-on-hover>
         <v-btn flat slot='activator'>{{name}}</v-btn>
         <v-list offset-y>
           <v-list-tile @click='logout()'>
             <v-list-tile-title>Log Out</v-list-tile-title>
           </v-list-tile>
-          <!--
-          <v-list-tile @click='pushSettings()'>
-            <v-list-tile-title>Settings</v-list-tile-title>
-          </v-list-tile>
-          -->
           <v-list-tile @click='pushAbout()'>
             <v-list-tile-title>About</v-list-tile-title>
           </v-list-tile>
@@ -67,20 +59,31 @@
 
 <script>
 
+import Login from './Login'
+
 export default {
   name: 'toolbar',
+  compnents: {
+    Login,
+  },
   link: [ {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'}, {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'} ],
   data () {
     return {
       user: '',
       name: '',
-      loggedIn: false
+      loggedIn: false,
+      showlogin: false,
     }
   },
   methods: {
     pushCreate () {
       this.$router.push({
         name: 'Create'
+      })
+    },
+    pushArchive () {
+      this.$router.push({
+        name: 'Archive'
       })
     },
     pushHome () {

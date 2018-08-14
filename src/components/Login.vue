@@ -4,7 +4,8 @@
 
 <script>
 import axios from 'axios'
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth'
 import firebaseui from 'firebaseui'
 import {config} from '../../keys.js';
 
@@ -16,7 +17,6 @@ export default {
       signInFlow: 'popup',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
         ],
       callbacks: {
         'signInSuccessWithAuthResult': function (currentUser, credential, redirectUrl) {

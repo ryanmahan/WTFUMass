@@ -14,7 +14,7 @@ export default {
   mounted() {
     var self = this
     var uiConfig = {
-      signInFlow: 'popup',
+      signInFlow: 'redirect',
       signInOptions: [
         firebase.auth.GoogleAuthProvider.PROVIDER_ID,
         ],

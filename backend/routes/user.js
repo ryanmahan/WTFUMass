@@ -3,10 +3,6 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var User = require('../models/User.js');
 
-const {OAuth2Client} = require('google-auth-library');
-CLIENT_ID = '449186400081-j47ll0hkuftmp0qv39n1k2vmduco7e0b.apps.googleusercontent.com'
-const client = new OAuth2Client(CLIENT_ID);
-
 // Add project to user's submitted projects
 router.put('/project/:id', function(req, res) {
   User.findByIdAndUpdate(req.params.id, { $push: {projects: req.body.project }})

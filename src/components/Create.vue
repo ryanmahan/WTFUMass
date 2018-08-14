@@ -25,14 +25,14 @@
           </v-form>
         </v-card>
       </v-flex>
-      <v-bottom-sheet v-model='showLogin'>
+      <v-dialog v-model='showLogin'>
         <v-card>
           <br>
           <span class='title'>You must log in to submit a project</span>
           <login/>
           <br>
         </v-card>
-      </v-bottom-sheet>
+      </v-dialog>
       <v-snackbar v-model='snackbar' top>
         {{ message }}
         <v-btn flat color='white' @click.native="snackbar = false">Close</v-btn>

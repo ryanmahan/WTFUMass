@@ -17,6 +17,8 @@
     "axios": "^0.17.1",
     "bad-words": "^1.6.1",
     "express": "^4.16.3",
+    "firebase": "^5.3.1",
+    "firebaseui": "^3.3.0",
     "google-auth-library": "^1.4.0",
     "vue": "^2.5.16",
     "vue-cookie": "^1.1.4",

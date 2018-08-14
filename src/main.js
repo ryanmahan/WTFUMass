@@ -3,6 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import firebase from 'firebase'
+import firebaseui from 'firebaseui'
+import config from '../keys'
+
+require("../node_modules/firebaseui/dist/firebaseui.css")
 
 Vue.config.productionTip = false
 
@@ -27,5 +32,8 @@ new Vue({
   router,
   mixins: [mixin],
   template: '<App/>',
-  components: { App }
+  components: { App },
+  created() {
+    firebase.initializeApp(config);
+  }
 })

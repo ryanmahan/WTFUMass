@@ -1,84 +1,44 @@
-<template>
-  <v-app id='login'>
-    <v-card flat>
-      <v-btn id='button' v-on:click= googleLogin() ><img id="logo" src='../assets/btn_google_dark_normal_web.png'/> Log in with Google</v-btn>
-    </v-card>
-  </v-app>
+<template lang="html">
+  <div id="firebaseui-auth-container"></div>
 </template>
-
-<style>
-#button {
- width: 191px;
- height: 46px;
- padding-left: 0px;
-}
-
-#logo {
- height: 46px;
- margin: 0px; 
-}
-
-</style>
 
 <script>
 import axios from 'axios'
+import firebase from 'firebase';
+import firebaseui from 'firebaseui'
+import {config} from '../../keys.js';
 
 export default {
-  name: 'Login',
-  data () {
-    return {
-      sheet: true,
+  name: 'auth',
+  mounted() {
+    var self = this
+    var uiConfig = {
+      signInFlow: 'popup',
+      signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+        ],
+      callbacks: {
+        'signInSuccessWithAuthResult': function (currentUser, credential, redirectUrl) {
+            let cu = currentUser.user
+            axios.post('/user/verify', {
+              email: cu.email,
+              fname: cu.given,
+            }).then((res) => {
+              self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
+              self.$bus.$emit('user', res.data.doc)
+              location.reload()
+            })
+            
+            return false;
+          }
+      },
+    } 
+    let ui = firebaseui.auth.AuthUI.getInstance()
+    if (!ui) {
+      ui = new firebaseui.auth.AuthUI(firebase.auth());
     }
-  },
-  methods: {
-    // DEPRECATED. GOOGLE SIGN-ON ONLY NOW
-    // submit (evt) {
-    //   let self = this
-    //   axios.get('/user/login', {
-    //     params: {
-    //     username: self.username,
-    //     password: self.password
-    //     }
-    //   })
-    //   .then (function (res) {
-    //     if (res.data.success) {
-    //       self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
-    //       self.$bus.$emit('user', res.data.doc.fname)
-    //       self.$router.push({
-    //         name: 'Home'
-    //       })
-    //     } else {
-    //       self.error = true
-    //     }
-    //   })
-    // },
-    googleLogin () {
-      let self = this
-      this.$googleAuth().directAccess()
-
-      this.$googleAuth().signIn(function (googleUser) { 
-        // things to do when sign-in succeeds
-
-        var id = googleUser.getAuthResponse().id_token
-
-        axios.post('/user/verify', {
-          token: id
-        })
-
-
-        .then(function (res) {
-          if (res.data.success) {
-          self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
-          self.$bus.$emit('user', res.data.doc)
-        } else {
-          self.error = true
-        }
-        })
-      }, function (error) {
-        console.log(error)
-        // things to do when sign-in fails
-      })
-    }
-  }
+    ui.start('#firebaseui-auth-container', uiConfig);
+    },
 }
 </script>

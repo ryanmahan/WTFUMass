@@ -2,14 +2,14 @@
   <main id="home">
     <v-app id="cardslist">
       <tutorial :show='firstLogin'></tutorial>
-      <v-bottom-sheet v-model='showLogin'>
+      <v-dialog v-model='showLogin'>
         <v-card>
           <br>
           <span class='title'>You must log in to vote</span>
           <login/>
           <br>
         </v-card>
-      </v-bottom-sheet>
+      </v-dialog>
         <v-layout v-for="project in sortedByVote" v-bind:key='project._id'>
           <v-flex id='layout'>
               <v-card class="my-2" id='card'>
@@ -117,6 +117,7 @@ import axios from 'axios'
 import Tutorial from './Tutorial'
 import AdminTools from './AdminTools'
 import Login from './Login'
+import firebase from 'firebase'
 
 export default {
   name: 'Home',

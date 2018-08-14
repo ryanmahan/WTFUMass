@@ -73,40 +73,26 @@ router.get('/admin/:id', function (req, res) {
 // Verify token passed by google log in function.
 router.post('/verify', function(req, res) {
   // Pass token and client ID to google to confirm
-  async function verify() {
-    token = req.body.token
-    const ticket = await client.verifyIdToken({
-        idToken: token,
-        audience: CLIENT_ID,  
-    });
-    const payload = ticket.getPayload();
 
-    // Find existing user with specific sub passed from google
-    User.findOne({'sub': payload['sub']} , function (err, doc) {
-      console.log(doc)
-      console.log(err)
-      if (doc === null) { //None found with sub ID
-        User.create({
-          sub: payload['sub'],
-          isAdmin: false,
-          fname: payload['given_name'],
-          email: payload['email']
-        }, function (err, doc) {
-          console.log(doc)
-          res.json({success: true, doc: {
-            fname: doc.fname,
-            _id: doc._id
-          }})
-        })
-      } else { //One found with sub
+  User.findOne({'email': req.body.email} , function (err, doc) {
+    if (doc === null) { //None found with email
+      User.create({
+        isAdmin: false,
+        fname: req.body.fname,
+        email: req.body.email
+      }, function (err, doc) {
         res.json({success: true, doc: {
           fname: doc.fname,
           _id: doc._id
         }})
-      }
-    })
-  }
-  verify().catch(console.error());
+      })
+    } else { //One found with email
+      res.json({success: true, doc: {
+        fname: doc.fname,
+        _id: doc._id
+      }})
+    }
+  })
 })
 
 // DEPRECATED. GOOGLE SIGN-ON ONLY NOW

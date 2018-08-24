@@ -27,10 +27,8 @@ export default {
           }).then((res) => {
             self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
             self.$bus.$emit('user', res.data.doc)
-            self.$router.push({
-              name: "Home",
-            })
           })
+          self.$router.push('/')
           return false;
         },
         'signInFailure': function (error) {

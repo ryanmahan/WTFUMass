@@ -8,11 +8,9 @@ import Home from '../components/Home'
 import Create from '../components/Create'
 import About from '../components/About'
 import Login from '../components/Login'
-import SignUp from '../components/SignUp'
 import Tutorial from '../components/Tutorial'
 import PrivacyPolicy from '../components/PrivacyPolicy'
 import Archive from '../components/Archive'
-import keys from '../../keys.js'
 
 Vue.use(Router)
 
@@ -48,11 +46,11 @@ export default new Router({
       name: 'Archive',
       path: '/archive'
     },
-    // {
-    //   component: Login,
-    //   name: 'Login',
-    //   path: '/login'
-    // },
+    {
+      component: Login,
+      name: 'Login',
+      path: '/login'
+    },
     // {
     //   component: SignUp,
     //   name: 'SignUp',
@@ -68,6 +66,6 @@ export default new Router({
       component: Tutorial,
       name: 'Tutorial',
       path: '/tutorial'
-    }
+    },
   ]
 })

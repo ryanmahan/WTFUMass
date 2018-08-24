@@ -4,7 +4,6 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import firebase from 'firebase'
-import firebaseui from 'firebaseui'
 import config from '../keys'
 
 require("../node_modules/firebaseui/dist/firebaseui.css")
@@ -13,15 +12,18 @@ Vue.config.productionTip = false
 
 let mixin = Vue.mixin({
   methods: {
+    firebaseLogged: () => {
+      console.log(firebase.auth().currentUser)
+    },
     logged: function () {
-    let user = this.$cookie.get('user')
-    console.log(user)
-    if(user === null){
-      return false
-    } else {
-      return JSON.parse(user)
+      let user = this.$cookie.get('user')
+      console.log(user)
+      if(user === null){
+        return false
+      } else {
+        return JSON.parse(user)
+      }
     }
-  }
   }
 })
 

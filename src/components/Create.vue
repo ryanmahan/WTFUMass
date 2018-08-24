@@ -78,12 +78,13 @@ export default {
   created: function () {
     let currUser = this.logged()
     if (!currUser) {
-      this.showLogin = true
+      this.$router.push({
+        name: "Login",
+        params: {
+          to: "Create"
+        }
+      })
     }
-    this.$bus.$on('user', function (arg) {
-      this.showLogin = false
-      location.reload()
-    }.bind(this))
   },
   methods: {
     submit (evt) {

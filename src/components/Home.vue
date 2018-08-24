@@ -141,7 +141,12 @@ export default {
       let self = this
       let currentUser = this.logged()
       if(!currentUser) {
-        this.showLogin = true
+        this.$router.push({
+        name: 'Login',
+        params: {
+          to: "Home"
+        }
+      })  
         return
       }
       axios.put('/project/votes/' + proj._id, {
@@ -218,11 +223,5 @@ export default {
     //   }
     // }
   },
-  mounted: function () {
-    this.$bus.$on('user', function (arg) {
-      this.showLogin = false
-      location.reload()
-    }.bind(this))
-  }
 }
 </script>

@@ -184,19 +184,27 @@ export default {
   },
   created: function() {
     let self = this
-    let currentUser = this.logged()
-    axios.get('/user/admin/' + currentUser._id)
-    .then(function (res) {
-      console.log(res.data.admin)
-      self.isAdmin = res.data.admin
-    })
+    var currentUser = false
+    console.log(localStorage.user)
+    console.log(typeof localStorage.user)
+    if (localStorage.user && localStorage.user !== null) {
+      currentUser = JSON.parse(localStorage.user)
+      axios.get('/user/admin/' + currentUser._id)
+      .then(function (res) {
+        console.log(res.data.admin)
+        self.isAdmin = res.data.admin
+      })
+    } else {
+      self.isAdmin = false
+    }
+    
     axios.get('/project/')
     .then(function (res) {
       self.projects = res.data
       self.projects.forEach(function (proj) {
         proj.voted = proj.votedBy.includes(currentUser._id)
-        if (currentUser === null) {
-          proj.voted = true
+        if (!currentUser) {
+          proj.voted = false
         }
         if (proj.tag === 'Project Done!') {
           proj.bar = 100
@@ -213,6 +221,13 @@ export default {
         return !item.archived
       })
     })
+
+    this.$bus.$on('user', function (user) {
+      this.currentUser = user
+      this.loggedIn = true
+      window.location.reload()
+    }.bind(this))
+
     if(this.$cookie.get('iwashere') === null) {
       this.$cookie.set('iwashere', new Date().toString, 60 * 60 * 24 * 30 * 12)
       this.firstLogin = true

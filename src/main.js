@@ -12,16 +12,11 @@ Vue.config.productionTip = false
 
 let mixin = Vue.mixin({
   methods: {
-    firebaseLogged: () => {
-      console.log(firebase.auth().currentUser)
-    },
     logged: function () {
-      let user = this.$cookie.get('user')
-      console.log(user)
-      if(user === null){
-        return false
+      if (localStorage.user) {
+        return JSON.parse(localStorage.user)
       } else {
-        return JSON.parse(user)
+        return false
       }
     }
   }

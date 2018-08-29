@@ -107,7 +107,7 @@ export default {
       })
     },
     logout () {
-      this.$cookie.delete('user')
+      localStorage.removeItem('user')
       this.loggedIn = false
       location.reload()
     }

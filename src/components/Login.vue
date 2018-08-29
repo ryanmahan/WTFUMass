@@ -26,9 +26,13 @@ export default {
             fname: cu.given,
           }).then((res) => {
             self.$cookie.set('user', JSON.stringify(res.data.doc), "0")
+            localStorage.user = JSON.stringify(res.data.doc)
+            console.log(res.data.doc)
+            console.log(localStorage.user)
             self.$bus.$emit('user', res.data.doc)
+            window.setTimeout(() => {self.$router.push('/')}, 1000)
           })
-          self.$router.push('/')
+          
           return false;
         },
         'signInFailure': function (error) {
